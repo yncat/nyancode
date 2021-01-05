@@ -24,6 +24,6 @@ class BaseNode:
         return ["pass"]
 
     def _generate(self, out_lst, code, indent_level=0):
-        ret = " "*(indent_level*INDENT_WIDTH)
+        ret = " " * (indent_level * INDENT_WIDTH)
         ret += code
         out_lst.append(code)

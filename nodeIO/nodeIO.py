@@ -9,7 +9,10 @@ class NodeEncoder(json.JSONEncoder):
         if isinstance(o, Block):
             return o.nodes
         if issubclass(o.__class__, BaseNode):
-            return {"name": o.name, "parameters": o.parameters, "child_blocks": o.child_blocks}
+            return {
+                "name": o.name,
+                "parameters": o.parameters,
+                "child_blocks": o.child_blocks}
         # end custom conversion
         return json.JSONEncoder.default(self, o)
 

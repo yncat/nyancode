@@ -1,5 +1,7 @@
 from contextlib import contextmanager
-import pypac, os
+import pypac
+import os
+
 
 @contextmanager
 def pac_context_for_url(url="https://www.actlab.org/", proxy_auth=None):
@@ -17,7 +19,8 @@ def pac_context_for_url(url="https://www.actlab.org/", proxy_auth=None):
     :param url: Consult the PAC for the proxy to use for this URL. Default is "https://www.actlab.org/"
     :param requests.auth.HTTPProxyAuth proxy_auth: Username and password proxy authentication.
     """
-    prev_http_proxy, prev_https_proxy = os.environ.get('HTTP_PROXY'), os.environ.get('HTTPS_PROXY')
+    prev_http_proxy, prev_https_proxy = os.environ.get(
+        'HTTP_PROXY'), os.environ.get('HTTPS_PROXY')
     pac = pypac.get_pac()
     if pac:
         resolver = pypac.ProxyResolver(pac, proxy_auth=proxy_auth)
@@ -34,4 +37,3 @@ def pac_context_for_url(url="https://www.actlab.org/", proxy_auth=None):
         os.environ['HTTPS_PROXY'] = prev_https_proxy
     elif 'HTTPS_PROXY' in os.environ:
         del os.environ['HTTPS_PROXY']
-
