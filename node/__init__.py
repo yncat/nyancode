@@ -1,10 +1,13 @@
-from .base import *
+from .test import *
+from .root import *
+from .print import *
+
 
 def new(name):
     try:
-        cls=globals()[name]
+        cls = globals()[name]
     except KeyError:
         return None
-    #end except
-    ret=cls()
+    # end except
+    ret = cls()
     return ret

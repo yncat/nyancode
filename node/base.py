@@ -1,3 +1,6 @@
+INDENT_WIDTH = 4
+
+
 class BaseNode:
     """基本となるノード。共通メソッドだけ定義。"""
     # 必要な引数の型を指定
@@ -15,3 +18,12 @@ class BaseNode:
 
     def setSingleChildBlock(self, name, child_block):
         self.child_blocks[name] = child_block
+
+    def generate(self):
+        """コードを生成する。コードは、行ごとに区切ったリストで返すこと。"""
+        return ["pass"]
+
+    def _generate(self, out_lst, code, indent_level=0):
+        ret = " "*(indent_level*INDENT_WIDTH)
+        ret += code
+        out_lst.append(code)

@@ -2,12 +2,12 @@
 
 import unittest
 import node
-from node.base import *
+import node.test
 
 
 class TestNode(unittest.TestCase):
     def test_new(self):
-        n = node.new("BaseNode")
-        self.assertTrue(isinstance(n, BaseNode))
+        n = node.new("TestNode")
+        self.assertTrue(isinstance(n, node.test.TestNode))
         n2 = node.new("nonexistent")
         self.assertIsNone(n2)

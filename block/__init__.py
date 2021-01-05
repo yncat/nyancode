@@ -6,3 +6,6 @@ class Block():
 
     def append(self, nd):
         self.nodes.append(nd)
+
+    def __iter__(self):
+        return self.nodes.__iter__()
