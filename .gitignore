@@ -1,6 +1,5 @@
 *.pyc
 *.log
-data/options.dat
 __pycache__
 settings.ini
 keymap.ini
@@ -11,6 +10,6 @@ dist/
 *.obj
 *.exp
 *.lib
-help.lnk
 *.spec
-history.dat
+pl_auto_save
+runCMD.bat

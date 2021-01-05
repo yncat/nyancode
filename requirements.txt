@@ -1,0 +1,5 @@
+﻿wxpython>=4.1
+pywin32
+winpaths
+pyinstaller>=4
+pyperclip
