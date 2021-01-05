@@ -1,0 +1,16 @@
+*.pyc
+*.log
+data/options.dat
+__pycache__
+settings.ini
+keymap.ini
+*.bat
+*log.txt
+build/
+dist/
+*.obj
+*.exp
+*.lib
+help.lnk
+*.spec
+history.dat
