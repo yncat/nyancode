@@ -315,7 +315,7 @@ class BaseEvents(object):
         self.identifier = identifier
 
     def Exit(self, event=None):
-        event.Skip()
+        self.parent.hFrame.Destroy()
 
     # wx.EVT_MOVE_END→wx.MoveEvent
     def WindowMove(self, event):

@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 # Application startup file
 
-import globalVars
-import app as application
 import os
 import sys
+# Python3.8対応
+# dllやモジュールをカレントディレクトリから読み込むように設定
+if sys.version_info.major >= 3 and sys.version_info.minor >= 8:
+    os.add_dll_directory(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+import globalVars
+import app as application
 import simpleDialog
 import traceback
 
@@ -30,12 +36,6 @@ def exchandler(type, exc, tb):
 
 
 sys.excepthook = exchandler
-
-# Python3.8対応
-# dllやモジュールをカレントディレクトリから読み込むように設定
-if sys.version_info.major >= 3 and sys.version_info.minor >= 8:
-    os.add_dll_directory(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
 def main():
