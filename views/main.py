@@ -39,6 +39,16 @@ class MainView(BaseView):
             self.app.config.getint(self.identifier, "positionY", 50, 0)
         )
         self.InstallMenuEvent(Menu(self.identifier), self.events.OnMenuSelect)
+        self.setupWidgets()
+
+    def setupWidgets(self):
+        creator = views.ViewCreator.ViewCreator(self.viewMode, self.hPanel, self.creator.GetSizer(
+        ), wx.VERTICAL, style=wx.EXPAND | wx.ALL, proportion=1)
+        self.codeBlockList, self.codeBlockListStatic = creator.listCtrl(
+            _("コードブロック"), None, wx.LC_REPORT, proportion=1, sizerFlag=wx.EXPAND)
+        self.codeBlockList.InsertColumn(0, _("名前"))
+        self.codeBlockList.InsertColumn(1, _("パラメータ"))
+        self.codeBlockList.InsertColumn(2, _("コードブロック"))
 
 
 class Menu(BaseMenu):
@@ -51,7 +61,7 @@ class Menu(BaseMenu):
 
         # ファイルメニュー
         self.RegisterMenuCommand(self.hFileMenu, [
-            "FILE_EXAMPLE",
+            "FILE_EXIT",
         ])
 
         # ヘルプメニューの中身
@@ -76,11 +86,8 @@ class Events(BaseEvents):
 
         selected = event.GetId()  # メニュー識別しの数値が出る
 
-        if selected == menuItemsStore.getRef("FILE_EXAMPLE"):
-            d = sample.Dialog()
-            d.Initialize()
-            r = d.Show()
-
+        if selected == menuItemsStore.getRef("FILE_EXIT"):
+            self.Exit()
         if selected == menuItemsStore.getRef("HELP_UPDATE"):
             globalVars.update.update()
 
