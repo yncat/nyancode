@@ -15,6 +15,7 @@ import constants
 import errorCodes
 import globalVars
 import menuItemsStore
+import projectManager
 
 from .base import *
 from simpleDialog import *
@@ -40,6 +41,7 @@ class MainView(BaseView):
         )
         self.InstallMenuEvent(Menu(self.identifier), self.events.OnMenuSelect)
         self.setupWidgets()
+        self.setupNewProject()
 
     def setupWidgets(self):
         creator = views.ViewCreator.ViewCreator(self.viewMode, self.hPanel, self.creator.GetSizer(
@@ -49,6 +51,10 @@ class MainView(BaseView):
         self.codeBlockList.InsertColumn(0, _("名前"))
         self.codeBlockList.InsertColumn(1, _("パラメータ"))
         self.codeBlockList.InsertColumn(2, _("コードブロック"))
+
+    def setupNewProject(self):
+        self.projectManager = projectManager.ProjectManager()
+        self.projectManager.new()
 
 
 class Menu(BaseMenu):
