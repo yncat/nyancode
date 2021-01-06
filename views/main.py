@@ -42,6 +42,7 @@ class MainView(BaseView):
         self.InstallMenuEvent(Menu(self.identifier), self.events.OnMenuSelect)
         self.setupWidgets()
         self.setupNewProject()
+        self.updateList()
 
     def setupWidgets(self):
         creator = views.ViewCreator.ViewCreator(self.viewMode, self.hPanel, self.creator.GetSizer(
@@ -55,6 +56,11 @@ class MainView(BaseView):
     def setupNewProject(self):
         self.projectManager = projectManager.ProjectManager()
         self.projectManager.new()
+
+    def updateList(self):
+        self.codeBlockList.DeleteAllItems()
+        for elem in self.projectManager.getList():
+            self.codeBlockList.Append(elem)
 
 
 class Menu(BaseMenu):

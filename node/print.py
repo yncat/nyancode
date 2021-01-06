@@ -6,6 +6,7 @@ class PrintNode(BaseNode):
     parameter_constraints = {
         "message": str  # プリントする文字
     }
+    display_name = _("文字を表示")
 
     def generate(self, indent_level=0):
         lst = []

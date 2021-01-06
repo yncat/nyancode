@@ -7,6 +7,8 @@ class BaseNode:
     parameter_constraints = {}
     # 必要な子ブロックの名前を指定
     child_block_constraints = {}
+    # ノードの表示名を指定
+    display_name = ""
 
     def __init__(self):
         self.parameters = {}
