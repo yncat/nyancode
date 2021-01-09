@@ -67,6 +67,16 @@ class MainView(BaseView):
         for elem in self.projectManager.getList():
             self.codeBlockList.Append(elem)
 
+    def getSelectedIndices(self):
+        first=self.codeBlockList.GetFirstSelected()
+        if first == -1: return None
+        lst=[first]
+        while True:
+            next = self.codeBlockList.GetNestSelected()
+            if next == -1: break
+            lst.append(next)
+        #end while
+        return lst
 
 class Menu(BaseMenu):
     def Apply(self, target):
@@ -74,12 +84,18 @@ class Menu(BaseMenu):
 
         # メニューの大項目を作る
         self.hFileMenu = wx.Menu()
+        self.hEditMenu = wx.Menu()
         self.hInsertMenu = wx.Menu()
         self.hHelpMenu = wx.Menu()
 
         # ファイルメニュー
         self.RegisterMenuCommand(self.hFileMenu, [
             "FILE_EXIT",
+        ])
+
+        # 編集メニュー
+        self.RegisterMenuCommand(self.hEditMenu, [
+            "EDIT_DELETENODE",
         ])
 
         # 挿入メニュー
@@ -97,6 +113,7 @@ class Menu(BaseMenu):
 
         # メニューバーの生成
         self.hMenuBar.Append(self.hFileMenu, _("ファイル"))
+        self.hMenuBar.Append(self.hEditMenu, _("編集"))
         self.hMenuBar.Append(self.hInsertMenu, _("挿入"))
         self.hMenuBar.Append(self.hHelpMenu, _("ヘルプ"))
         target.SetMenuBar(self.hMenuBar)
@@ -114,6 +131,10 @@ class Events(BaseEvents):
 
         if selected == menuItemsStore.getRef("FILE_EXIT"):
             self.Exit()
+
+        # 編集操作
+        if selected == menuItemsStore.getRef("EDIT_DELETENODE"):
+            self.deleteNode()
 
         # ノード関係
         if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
@@ -159,3 +180,13 @@ class Events(BaseEvents):
         self.parent.updateList()
         self.parent.codeBlockList.Focus(index)
         self.parent.codeBlockList.Select(index)
+
+
+    def deleteNode(self):
+        selected=self.parent.getSelectedIndices()
+        if not selected or len(selected) == 0:
+            dialog(_("エラー"), _("削除する項目が選択されていません。"))
+            return
+        # end nothing is selected
+        res = yesNoDialog(_("確認"), _("選択中の%(num)d項目を削除してもよろしいですか？") % {"num": len(selected)})
+        if res == wx.ID_NO: return
