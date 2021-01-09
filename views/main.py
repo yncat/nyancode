@@ -154,5 +154,5 @@ class Events(BaseEvents):
             node.setSingleParameter(parameter_name, d.getData())
             input_index += 1
         # end while
-        self.parent.projectManager.addNodeToCurrentBlock(node)
+        self.parent.projectManager.insertNodeToCurrentBlock(node, index=self.parent.codeBlockList.GetFocusedItem())
         self.parent.updateList()

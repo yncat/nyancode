@@ -29,6 +29,7 @@ class ProjectManager:
         return lst
 
     def insertNodeToCurrentBlock(self, node, index=-1):
-        self.browsing_block.append(node, index=index)
-        self.log.debug("Added node %s to the currently browsing block %s" % (node, self.browsing_block))
+        index_str = str(index) if index != -1 else "last"
+        self.browsing_block.insert(node, index=index)
+        self.log.debug("Added node %s to the currently browsing block %s (index: %s" % (node, self.browsing_block, index_str))
 
