@@ -45,8 +45,13 @@ class MainView(BaseView):
         self.updateList()
 
     def setupWidgets(self):
-        creator = views.ViewCreator.ViewCreator(self.viewMode, self.hPanel, self.creator.GetSizer(
-        ), wx.VERTICAL, style=wx.EXPAND | wx.ALL, proportion=1)
+        creator = views.ViewCreator.ViewCreator(
+            self.viewMode,
+            self.hPanel,
+            self.creator.GetSizer(),
+            wx.VERTICAL,
+            style=wx.EXPAND | wx.ALL,
+            proportion=1)
         self.codeBlockList, self.codeBlockListStatic = creator.listCtrl(
             _("コードブロック"), None, wx.LC_REPORT, proportion=1, sizerFlag=wx.EXPAND)
         self.codeBlockList.InsertColumn(0, _("名前"))
@@ -78,7 +83,7 @@ class Menu(BaseMenu):
         ])
 
         # 挿入メニュー
-        submenu=wx.Menu()
+        submenu = wx.Menu()
         self.RegisterMenuCommand(submenu, [
             "INSERT_IO_PRINT",
         ])
@@ -121,17 +126,17 @@ class Events(BaseEvents):
             d.Initialize()
             r = d.Show()
 
-    def addNode(self,node):
-        input_index=0
+    def addNode(self, node):
+        input_index = 0
         parameter_count = len(node.parameter_constraints)
-        parameter_names=list(node.parameter_constraints.keys())
+        parameter_names = list(node.parameter_constraints.keys())
         canceled = False
 
         while input_index != parameter_count:
             if input_index == -1:
                 canceled = True
                 break
-            #end cancel
+            # end cancel
 
             parameter_name = parameter_names[input_index]
 
@@ -140,17 +145,12 @@ class Events(BaseEvents):
                 d = strInputDialog.dialog()
                 d.Initialize(node.parameter_display_names[parameter_name])
                 r = d.Show()
-            #end str
+            # end str
 
             if r == wx.ID_CANCEL:
-                input_index-=1
+                input_index -= 1
                 continue
-            #end cancel
+            # end cancel
             node.setSingleParameter(parameter_name, d.getData())
-            input_index+=1
-        #end while
-
-
-
-
-
+            input_index += 1
+        # end while

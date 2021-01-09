@@ -21,7 +21,7 @@ class dialog(BaseDialog):
     def Initialize(self, parameter_display_name):
         self.log.debug("created")
         super().Initialize(None, _("文字列引数の入力"), 0)
-        self.parameter_display_name=parameter_display_name
+        self.parameter_display_name = parameter_display_name
         self.InstallControls()
         return True
 
@@ -32,7 +32,7 @@ class dialog(BaseDialog):
         self.input, static = creator.inputbox(
             self.parameter_display_name,
             style=wx.TE_MULTILINE,
-            x = 400
+            x=400
         )
         footerCreator = views.ViewCreator.ViewCreator(
             self.viewMode,
