@@ -38,6 +38,6 @@ class NodeIO():
     def _loadBlock(self, o):
         blk = Block()
         for elem in o:
-            blk.append(self._load(elem))
+            blk.insert(self._load(elem))
         # end for
         return blk

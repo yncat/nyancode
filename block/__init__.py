@@ -4,8 +4,11 @@ class Block():
     def __init__(self):
         self.nodes = []
 
-    def append(self, nd):
-        self.nodes.append(nd)
+    def insert(self, nd, index=-1):
+        if index==-1:
+            self.nodes.append(nd)
+        else:
+            self.nodes.insert(index,nd)
 
     def __iter__(self):
         return self.nodes.__iter__()

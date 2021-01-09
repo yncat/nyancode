@@ -23,7 +23,7 @@ class TestNodeIO(unittest.TestCase):
         blk = Block()
         ni = TestNode()
         ni.setSingleParameter("is_inner", True)
-        blk.append(ni)
+        blk.insert(ni)
         n.setSingleChildBlock("block", blk)
         io = nodeIO.NodeIO()
         dumped = io.dump(n)
@@ -48,7 +48,7 @@ class TestNodeIO(unittest.TestCase):
         blk = Block()
         ni = TestNode()
         ni.setSingleParameter("is_inner", True)
-        blk.append(ni)
+        blk.insert(ni)
         expected.setSingleChildBlock("block", blk)
         in_json = '{"name": "TestNode", "parameters": {"test_int": 1, "test_str": "abc"}, "child_blocks": {"block": [{"name": "TestNode", "parameters": {"is_inner": true}, "child_blocks": {}}]}}'
         io = nodeIO.NodeIO()

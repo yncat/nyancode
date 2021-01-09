@@ -28,7 +28,7 @@ class ProjectManager:
         self.log.debug("Retrieved %d nodes from the currently browsing block %s." % (len(lst), self.browsing_block))
         return lst
 
-    def addNodeToCurrentBlock(self, node):
-        self.browsing_block.append(node)
+    def insertNodeToCurrentBlock(self, node, index=-1):
+        self.browsing_block.append(node, index=index)
         self.log.debug("Added node %s to the currently browsing block %s" % (node, self.browsing_block))
 
