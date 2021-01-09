@@ -15,13 +15,13 @@ import constants
 import errorCodes
 import globalVars
 import menuItemsStore
+import node
 import projectManager
 
 from .base import *
 from simpleDialog import *
 
-from views import mkDialog
-from views import sample
+from views import strInputDialog
 from views import versionDialog
 
 
@@ -109,10 +109,48 @@ class Events(BaseEvents):
 
         if selected == menuItemsStore.getRef("FILE_EXIT"):
             self.Exit()
+
+        # ノード関係
+        if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
+            self.addNode(node.new("PrintNode"))
+
         if selected == menuItemsStore.getRef("HELP_UPDATE"):
             globalVars.update.update()
-
         if selected == menuItemsStore.getRef("HELP_VERSIONINFO"):
             d = versionDialog.dialog()
             d.Initialize()
             r = d.Show()
+
+    def addNode(self,node):
+        input_index=0
+        parameter_count = len(node.parameter_constraints)
+        parameter_names=list(node.parameter_constraints.keys())
+        canceled = False
+
+        while input_index != parameter_count:
+            if input_index == -1:
+                canceled = True
+                break
+            #end cancel
+
+            parameter_name = parameter_names[input_index]
+
+            # パラメータの型に応じた入力ダイアログを出す
+            if node.parameter_constraints[parameter_name] == str:
+                d = strInputDialog.dialog()
+                d.Initialize(node.parameter_display_names[parameter_name])
+                r = d.Show()
+            #end str
+
+            if r == wx.ID_CANCEL:
+                input_index-=1
+                continue
+            #end cancel
+            node.setSingleParameter(parameter_name, d.getData())
+            input_index+=1
+        #end while
+
+
+
+
+

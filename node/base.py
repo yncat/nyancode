@@ -5,6 +5,8 @@ class BaseNode:
     """基本となるノード。共通メソッドだけ定義。"""
     # 必要な引数の型を指定
     parameter_constraints = {}
+    # 引数の表示名を指定。ビューで引数を入力するときに、ウィンドウタイトルに表示される。
+    parameter_display_names={}
     # 必要な子ブロックの名前を指定
     child_block_constraints = {}
     # ノードの表示名を指定
