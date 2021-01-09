@@ -23,7 +23,7 @@ class ProjectManager:
         lst = []
         for elem in self.browsing_block:
             lst.append((elem.display_name, str(
-                elem.parameters), str(elem.child_blocks)))
+                elem.parameters), len(elem.child_blocks)))
         # end for
         self.log.debug("Retrieved %d nodes from the currently browsing block %s." % (len(lst), self.browsing_block))
         return lst
