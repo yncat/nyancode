@@ -9,7 +9,7 @@ class PrintNode(BaseNode):
     parameter_display_names = {
         "message": _("表示するメッセージの内容")
     }
-    display_name = _("文字を表示")
+    display_name = _("メッセージを表示")
 
     def generate(self, indent_level=0):
         lst = []
