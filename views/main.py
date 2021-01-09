@@ -69,12 +69,20 @@ class Menu(BaseMenu):
 
         # メニューの大項目を作る
         self.hFileMenu = wx.Menu()
+        self.hInsertMenu = wx.Menu()
         self.hHelpMenu = wx.Menu()
 
         # ファイルメニュー
         self.RegisterMenuCommand(self.hFileMenu, [
             "FILE_EXIT",
         ])
+
+        # 挿入メニュー
+        submenu=wx.Menu()
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_IO_PRINT",
+        ])
+        self.RegisterMenuCommand(self.hInsertMenu, "", _("入出力"), submenu)
 
         # ヘルプメニューの中身
         self.RegisterMenuCommand(self.hHelpMenu, [
@@ -84,6 +92,7 @@ class Menu(BaseMenu):
 
         # メニューバーの生成
         self.hMenuBar.Append(self.hFileMenu, _("ファイル"))
+        self.hMenuBar.Append(self.hInsertMenu, _("挿入"))
         self.hMenuBar.Append(self.hHelpMenu, _("ヘルプ"))
         target.SetMenuBar(self.hMenuBar)
 

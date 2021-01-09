@@ -31,7 +31,7 @@ def exchandler(type, exc, tb):
     except BaseException:
         pass
     simpleDialog.winDialog(
-        "error", "An error has occured. Contact to the developer for further assistance. Detail:" + "\n".join(msg[-2:]))
+        "error", "An error has occured. Contact the developer for further assistance. Detail:" + "\n".join(msg[-2:]))
     sys.exit(1)
 
 
