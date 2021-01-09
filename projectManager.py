@@ -30,5 +30,5 @@ class ProjectManager:
 
     def addNodeToCurrentBlock(self, node):
         self.browsing_block.append(node)
-        self.log.debug("Added node %s to the currently browsing block %s", (node, self.browsing_block))
+        self.log.debug("Added node %s to the currently browsing block %s" % (node, self.browsing_block))
 
