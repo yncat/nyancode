@@ -220,15 +220,15 @@ class Events(BaseEvents):
 
     def outputProgram(self):
         with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
-            if fileDialog.ShowModal() == wx.ID_CANCEL: return
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                return
             pathname = fileDialog.GetPath()
-        #end dialog
+        # end dialog
         program = self.parent.projectManager.outputProgram()
         try:
             with open(pathname, "w", encoding="UTF-8") as f:
                 f.write(program)
-            #end with
+            # end with
         except Exception as e:
             dialog(_("エラー"), "プログラムの出力中にエラーが発生しました。\n%s" % e)
-        #end except
-
+        # end except

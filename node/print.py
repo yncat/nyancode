@@ -15,6 +15,7 @@ class PrintNode(BaseNode):
 
     def generate(self, indent_level=0):
         lst = []
-        self._generate(lst, "nyancode.message(\"%s\", \"%s\")" %
-                       (self.parameters["title"], self.parameters["message"]), indent_level)
+        self._generate(
+            lst, "nyancode.message(\"%s\", \"%s\")" %
+            (self.parameters["title"], self.parameters["message"]), indent_level)
         return lst

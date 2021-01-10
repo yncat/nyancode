@@ -12,7 +12,7 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 8:
 import globalVars
 import app as application
 import simpleDialog
-import nyancode_runtime # dummy
+import nyancode_runtime  # dummy
 import traceback
 
 # カレントディレクトリを設定

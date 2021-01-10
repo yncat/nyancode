@@ -13,7 +13,7 @@ class ProjectManager:
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
-        self.nodeIO=nodeIO.NodeIO()
+        self.nodeIO = nodeIO.NodeIO()
         self.log.debug("Created.")
 
     def new(self):
