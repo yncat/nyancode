@@ -4,9 +4,11 @@ from .base import *
 class PrintNode(BaseNode):
     """文字をプリントする。"""
     parameter_constraints = {
+        "title": str, # メッセージタイトル
         "message": str  # プリントする文字
     }
     parameter_display_names = {
+        "title": "メッセージタイトル",
         "message": "表示するメッセージの内容"
     }
     display_name = "メッセージを表示"
