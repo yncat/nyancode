@@ -156,6 +156,11 @@ class Events(BaseEvents):
         if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
             self.addNode(node.new("PrintNode"))
 
+        # 実行関係
+        if selected == menuItemsStore.getRef("EXEC_OUTPUTPROGRAM"):
+            self.outputProgram()
+
+        # その他
         if selected == menuItemsStore.getRef("HELP_UPDATE"):
             globalVars.update.update()
         if selected == menuItemsStore.getRef("HELP_VERSIONINFO"):
@@ -212,3 +217,18 @@ class Events(BaseEvents):
         # end canceled
         self.parent.projectManager.deleteMultipleNodes(selected)
         self.parent.updateList()
+
+    def outputProgram(self):
+        with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+            if fileDialog.ShowModal() == wx.ID_CANCEL: return
+            pathname = fileDialog.GetPath()
+        #end dialog
+        program = self.parent.projectManager.outputProgram()
+        try:
+            with open(pathname, "w", encoding="UTF-8") as f:
+                f.write(program)
+            #end with
+        except Exception as e:
+            dialog(_("エラー"), "プログラムの出力中にエラーが発生しました。\n%s" % e)
+        #end except
+

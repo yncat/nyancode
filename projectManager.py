@@ -1,6 +1,7 @@
 import block
 import constants
 import node
+import nodeIO
 from logging import getLogger
 
 
@@ -12,6 +13,7 @@ class ProjectManager:
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
+        self.nodeIO=nodeIO.NodeIO()
         self.log.debug("Created.")
 
     def new(self):
@@ -43,3 +45,6 @@ class ProjectManager:
         self.log.debug("Deleting %d nodes from block %s." %
                        (len(indexList), self.browsing_block))
         self.browsing_block.deleteMultipleNodes(indexList)
+
+    def outputProgram(self):
+        return "\n".join(self.root_node.generate())
