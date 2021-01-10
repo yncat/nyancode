@@ -92,6 +92,7 @@ class Menu(BaseMenu):
         self.hFileMenu = wx.Menu()
         self.hEditMenu = wx.Menu()
         self.hInsertMenu = wx.Menu()
+        self.hExecMenu = wx.Menu()
         self.hHelpMenu = wx.Menu()
 
         # ファイルメニュー
@@ -111,7 +112,15 @@ class Menu(BaseMenu):
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("入出力"), submenu)
 
-        # ヘルプメニューの中身
+        # 実行メニュー
+        self.RegisterMenuCommand(self.hExecMenu, [
+            "EXEC_RUN",
+        ])
+        self.RegisterMenuCommand(self.hExecMenu, [
+            "EXEC_OUTPUTPROGRAM",
+        ])
+
+        # ヘルプメニュー
         self.RegisterMenuCommand(self.hHelpMenu, [
             "HELP_UPDATE",
             "HELP_VERSIONINFO",
@@ -121,6 +130,7 @@ class Menu(BaseMenu):
         self.hMenuBar.Append(self.hFileMenu, _("ファイル"))
         self.hMenuBar.Append(self.hEditMenu, _("編集"))
         self.hMenuBar.Append(self.hInsertMenu, _("挿入"))
+        self.hMenuBar.Append(self.hExecMenu, _("実行"))
         self.hMenuBar.Append(self.hHelpMenu, _("ヘルプ"))
         target.SetMenuBar(self.hMenuBar)
 

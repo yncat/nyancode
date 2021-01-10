@@ -4,7 +4,7 @@ from .base import *
 class PrintNode(BaseNode):
     """文字をプリントする。"""
     parameter_constraints = {
-        "title": str, # メッセージタイトル
+        "title": str,  # メッセージタイトル
         "message": str  # プリントする文字
     }
     parameter_display_names = {
@@ -15,6 +15,6 @@ class PrintNode(BaseNode):
 
     def generate(self, indent_level=0):
         lst = []
-        self._generate(lst, "print(\"%s\")" %
-                       (self.parameters["message"]), indent_level)
+        self._generate(lst, "nyancode.message(\"%s\", \"%s\")" %
+                       (self.parameters["title"], self.parameters["message"]), indent_level)
         return lst

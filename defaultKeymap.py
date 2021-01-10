@@ -6,6 +6,8 @@ defaultKeymap = {}
 
 defaultKeymap["mainView"] = {
     "EDIT_DELETENODE": "delete",
+    "EXEC_RUN": "f5",
+    "EXEC_OUTPUTPROGRAM": "f9",
     "HELP_UPDATE": "",
     "HELP_VERSIONINFO": "",
 }
