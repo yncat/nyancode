@@ -10,5 +10,10 @@ class Block():
         else:
             self.nodes.insert(index, nd)
 
+    def deleteMultipleNodes(self, indexList):
+        nodes_to_delete = [self.nodes[i] for i in indexList]
+        for elem in nodes_to_delete:
+            self.nodes.remove(elem)
+
     def __iter__(self):
         return self.nodes.__iter__()

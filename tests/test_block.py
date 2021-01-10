@@ -38,3 +38,25 @@ class TestBlock(unittest.TestCase):
         blk.insert(p2)
         blk.insert(r, index=3)
         self.assertEqual(list(blk), [p1, p2, r])
+
+    def test_deleteMultipleNodes_single(self):
+        p1 = node.new("PrintNode")
+        p2 = node.new("PrintNode")
+        r = node.new("RootNode")
+        blk = Block()
+        blk.insert(p1)
+        blk.insert(p2)
+        blk.insert(r)
+        blk.deleteMultipleNodes([1])
+        self.assertEqual(list(blk), [p1, r])
+
+    def test_deleteMultipleNodes_multiple(self):
+        p1 = node.new("PrintNode")
+        p2 = node.new("PrintNode")
+        r = node.new("RootNode")
+        blk = Block()
+        blk.insert(p1)
+        blk.insert(p2)
+        blk.insert(r)
+        blk.deleteMultipleNodes([1, 2])
+        self.assertEqual(list(blk), [p1])
