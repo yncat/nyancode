@@ -6,7 +6,9 @@ from logging import getLogger
 
 class ProjectManager:
     def __init__(self):
-        self.log = getLogger("%s.%s" % (constants.LOG_PREFIX, "ProjectManager"))
+        self.log = getLogger(
+            "%s.%s" %
+            (constants.LOG_PREFIX, "ProjectManager"))
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
@@ -25,11 +27,14 @@ class ProjectManager:
             lst.append((elem.display_name, str(
                 elem.parameters), len(elem.child_blocks)))
         # end for
-        self.log.debug("Retrieved %d nodes from the currently browsing block %s." % (len(lst), self.browsing_block))
+        self.log.debug(
+            "Retrieved %d nodes from the currently browsing block %s." %
+            (len(lst), self.browsing_block))
         return lst
 
     def insertNodeToCurrentBlock(self, node, index=-1):
         index_str = str(index) if index != -1 else "last"
         self.browsing_block.insert(node, index=index)
-        self.log.debug("Added node %s to the currently browsing block %s (index: %s" % (node, self.browsing_block, index_str))
-
+        self.log.debug(
+            "Added node %s to the currently browsing block %s (index: %s" %
+            (node, self.browsing_block, index_str))

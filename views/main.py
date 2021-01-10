@@ -68,15 +68,18 @@ class MainView(BaseView):
             self.codeBlockList.Append(elem)
 
     def getSelectedIndices(self):
-        first=self.codeBlockList.GetFirstSelected()
-        if first == -1: return None
-        lst=[first]
+        first = self.codeBlockList.GetFirstSelected()
+        if first == -1:
+            return None
+        lst = [first]
         while True:
             next = self.codeBlockList.GetNestSelected()
-            if next == -1: break
+            if next == -1:
+                break
             lst.append(next)
-        #end while
+        # end while
         return lst
+
 
 class Menu(BaseMenu):
     def Apply(self, target):
@@ -175,18 +178,21 @@ class Events(BaseEvents):
             node.setSingleParameter(parameter_name, d.getData())
             input_index += 1
         # end while
-        index = self.parent.codeBlockList.GetFocusedItem()+1
+        index = self.parent.codeBlockList.GetFocusedItem() + 1
         self.parent.projectManager.insertNodeToCurrentBlock(node, index=index)
         self.parent.updateList()
         self.parent.codeBlockList.Focus(index)
         self.parent.codeBlockList.Select(index)
 
-
     def deleteNode(self):
-        selected=self.parent.getSelectedIndices()
+        selected = self.parent.getSelectedIndices()
         if not selected or len(selected) == 0:
             dialog(_("エラー"), _("削除する項目が選択されていません。"))
             return
         # end nothing is selected
-        res = yesNoDialog(_("確認"), _("選択中の%(num)d項目を削除してもよろしいですか？") % {"num": len(selected)})
-        if res == wx.ID_NO: return
+        res = yesNoDialog(
+            _("確認"),
+            _("選択中の%(num)d項目を削除してもよろしいですか？") % {
+                "num": len(selected)})
+        if res == wx.ID_NO:
+            return

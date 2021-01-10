@@ -12,7 +12,7 @@ class TestBlock(unittest.TestCase):
         blk = Block()
         blk.insert(r)
         blk.insert(p)
-        self.assertEqual(list(blk), [r,p])
+        self.assertEqual(list(blk), [r, p])
 
     def test_insert_middle(self):
         p1 = node.new("PrintNode")
@@ -22,7 +22,7 @@ class TestBlock(unittest.TestCase):
         blk.insert(p1)
         blk.insert(p2)
         blk.insert(r, index=1)
-        self.assertEqual(list(blk), [p1,r,p2])
+        self.assertEqual(list(blk), [p1, r, p2])
 
     def test_insert_outOfIndex(self):
         p1 = node.new("PrintNode")
@@ -32,11 +32,9 @@ class TestBlock(unittest.TestCase):
         blk.insert(p1)
         blk.insert(p2)
         blk.insert(r, index=2)
-        self.assertEqual(list(blk), [p1,p2,r])
+        self.assertEqual(list(blk), [p1, p2, r])
         blk = Block()
         blk.insert(p1)
         blk.insert(p2)
         blk.insert(r, index=3)
-        self.assertEqual(list(blk), [p1,p2,r])
-
-
+        self.assertEqual(list(blk), [p1, p2, r])
