@@ -5,7 +5,7 @@
 defaultKeymap = {}
 
 defaultKeymap["mainView"] = {
-    "FILE_EXAMPLE": "ctrl+F12/shift+delete/ctrl+c/INSERT/ctrl+BACK",
+    "EDIT_DELETENODE": "delete",
     "HELP_UPDATE": "",
     "HELP_VERSIONINFO": "",
 }

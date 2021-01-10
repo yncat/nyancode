@@ -38,3 +38,8 @@ class ProjectManager:
         self.log.debug(
             "Added node %s to the currently browsing block %s (index: %s" %
             (node, self.browsing_block, index_str))
+
+    def deleteMultipleNodes(self, indexList):
+        self.log.debug("Deleting %d nodes from block %s." %
+                       (len(indexList), self.browsing_block))
+        self.browsing_block.deleteMultipleNodes(indexList)

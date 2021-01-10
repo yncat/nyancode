@@ -13,7 +13,9 @@ import pywintypes
 
 import constants
 import errorCodes
+import defaultKeymap
 import globalVars
+import keymap
 import menuItemsStore
 import node
 import projectManager
@@ -72,8 +74,9 @@ class MainView(BaseView):
         if first == -1:
             return None
         lst = [first]
+        next = first
         while True:
-            next = self.codeBlockList.GetNestSelected()
+            next = self.codeBlockList.GetNextSelected(next)
             if next == -1:
                 break
             lst.append(next)
@@ -196,3 +199,6 @@ class Events(BaseEvents):
                 "num": len(selected)})
         if res == wx.ID_NO:
             return
+        # end canceled
+        self.parent.projectManager.deleteMultipleNodes(selected)
+        self.parent.updateList()
