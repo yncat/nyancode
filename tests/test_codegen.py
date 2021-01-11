@@ -8,7 +8,7 @@ from block import Block
 class TestCodegen(unittest.TestCase):
     def test_root(self):
         r = node.new("RootNode")
-        p = node.new("PrintNode")
+        p = node.new("MessageNode")
         p.setSingleParameter("title", "hello")
         p.setSingleParameter("message", "hello")
         blk = Block()
@@ -24,7 +24,7 @@ class TestCodegen(unittest.TestCase):
 
     def test_root_for_direct_run(self):
         r = node.new("RootNode")
-        p = node.new("PrintNode")
+        p = node.new("MessageNode")
         p.setSingleParameter("title", "hello")
         p.setSingleParameter("message", "hello")
         blk = Block()
@@ -38,7 +38,7 @@ class TestCodegen(unittest.TestCase):
             "nyancode.message(\"hello\", \"hello\")")
 
     def test_print(self):
-        n = node.new("PrintNode")
+        n = node.new("MessageNode")
         n.setSingleParameter("title", "meow")
         n.setSingleParameter("message", "meow")
         generated = n.generate()

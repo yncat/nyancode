@@ -1,6 +1,6 @@
 from .test import *
 from .root import *
-from .print import *
+from .message import *
 
 
 def new(name):

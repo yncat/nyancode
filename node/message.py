@@ -1,7 +1,7 @@
 from .base import *
 
 
-class PrintNode(BaseNode):
+class MessageNode(BaseNode):
     """文字をプリントする。"""
     parameter_constraints = {
         "title": str,  # メッセージタイトル

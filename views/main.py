@@ -171,7 +171,7 @@ class Events(BaseEvents):
 
         # ノード関係
         if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
-            self.addNode(node.new("PrintNode"))
+            self.addNode(node.new("MessageNode"))
 
         # 実行関係
         if selected == menuItemsStore.getRef("EXEC_RUN"):

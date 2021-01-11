@@ -8,15 +8,15 @@ from block import Block
 class TestBlock(unittest.TestCase):
     def test_insert_last(self):
         r = node.new("RootNode")
-        p = node.new("PrintNode")
+        p = node.new("MessageNode")
         blk = Block()
         blk.insert(r)
         blk.insert(p)
         self.assertEqual(list(blk), [r, p])
 
     def test_insert_middle(self):
-        p1 = node.new("PrintNode")
-        p2 = node.new("PrintNode")
+        p1 = node.new("MessageNode")
+        p2 = node.new("MessageNode")
         r = node.new("RootNode")
         blk = Block()
         blk.insert(p1)
@@ -25,8 +25,8 @@ class TestBlock(unittest.TestCase):
         self.assertEqual(list(blk), [p1, r, p2])
 
     def test_insert_outOfIndex(self):
-        p1 = node.new("PrintNode")
-        p2 = node.new("PrintNode")
+        p1 = node.new("MessageNode")
+        p2 = node.new("MessageNode")
         r = node.new("RootNode")
         blk = Block()
         blk.insert(p1)
@@ -40,8 +40,8 @@ class TestBlock(unittest.TestCase):
         self.assertEqual(list(blk), [p1, p2, r])
 
     def test_deleteMultipleNodes_single(self):
-        p1 = node.new("PrintNode")
-        p2 = node.new("PrintNode")
+        p1 = node.new("MessageNode")
+        p2 = node.new("MessageNode")
         r = node.new("RootNode")
         blk = Block()
         blk.insert(p1)
@@ -51,8 +51,8 @@ class TestBlock(unittest.TestCase):
         self.assertEqual(list(blk), [p1, r])
 
     def test_deleteMultipleNodes_multiple(self):
-        p1 = node.new("PrintNode")
-        p2 = node.new("PrintNode")
+        p1 = node.new("MessageNode")
+        p2 = node.new("MessageNode")
         r = node.new("RootNode")
         blk = Block()
         blk.insert(p1)
