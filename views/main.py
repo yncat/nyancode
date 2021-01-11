@@ -164,7 +164,6 @@ class Events(BaseEvents):
             self.saveAs()
 
         if selected == menuItemsStore.getRef("FILE_EXIT"):
-            self.parent.codeBlockList.saveColumnInfo()
             self.Exit()
 
         # 編集操作
@@ -292,3 +291,7 @@ class Events(BaseEvents):
             self.parent.projectManager.run()
         except Exception as e:
             dialog(_("実行時エラー"), _("プログラムの実行中にエラーが起きました。\n%s" % e))
+
+    def Exit(self, event=None):
+        self.parent.codeBlockList.saveColumnInfo()
+        BaseEvents.Exit(self)
