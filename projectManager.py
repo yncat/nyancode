@@ -53,6 +53,9 @@ class ProjectManager:
     def outputProgram(self):
         return "\n".join(self.root_node.generate())
 
+    def outputProgramForDirectRun(self):
+        return "\n".join(self.root_node.generate(for_direct_run=True))
+
     def outputProject(self):
         return self.nodeIO.dump(self.root_node)
 
@@ -89,4 +92,4 @@ class ProjectManager:
         self.browsing_block = self.root_node.child_blocks["block"]
 
     def run(self):
-        exec(self.outputProgram())
+        exec(self.outputProgramForDirectRun())
