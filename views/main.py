@@ -156,7 +156,7 @@ class Events(BaseEvents):
             self.save()
         if selected == menuItemsStore.getRef("FILE_SAVEAS"):
             self.saveAs()
-        
+
         if selected == menuItemsStore.getRef("FILE_EXIT"):
             self.Exit()
 
@@ -234,13 +234,10 @@ class Events(BaseEvents):
         with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
-            pathname = fileDialog.GetPath()
+            path = fileDialog.GetPath()
         # end dialog
-        program = self.parent.projectManager.outputProgram()
         try:
-            with open(pathname, "w", encoding="UTF-8") as f:
-                f.write(program)
-            # end with
+            self.parent.projectManager.savePythonProgram(path)
         except Exception as e:
             dialog(_("エラー"), "プログラムの出力中にエラーが発生しました。\n%s" % e)
         # end except
@@ -249,19 +246,21 @@ class Events(BaseEvents):
         if self.parent.projectManager.mustSaveAs():
             self.saveAs()
             return
-        #end must save as
-        self.parent.projectManager.save()
+        # end must save as
+        try:
+            self.parent.projectManager.save()
+        except Exception as e:
+            dialog(_("エラー"), _("プロジェクトの保存に失敗しました。\n%s" % e))
+        # end except
 
     def saveAs(self):
         with wx.FileDialog(self.parent.hFrame, _("プロジェクトを保存"), wildcard=_("プロジェクトファイル") + "(*.ncp)|*.ncp", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
-            pathname = fileDialog.GetPath()
+            path = fileDialog.GetPath()
         # end dialog
         try:
-            self.parent.projectManager.saveAs(pathname)
+            self.parent.projectManager.saveAs(path)
         except Exception as e:
             dialog(_("エラー"), _("プロジェクトの保存に失敗しました。\n%s" % e))
-        #end except
-
-
+        # end except

@@ -60,17 +60,20 @@ class ProjectManager:
     def getProjectName(self):
         if self.project_path == "":
             return ""
-        #end no project name
+        # end no project name
         return os.path.basename(self.project_path).split(".")[0]
 
     def mustSaveAs(self):
         return self.project_path == ""
 
     def saveAs(self, project_path):
-        self.project_path=project_path
+        self.project_path = project_path
         self.save()
 
     def save(self):
         with open(self.project_path, "w", encoding="UTF-8") as f:
             f.write(self.outputProject())
 
+    def savePythonProgram(self, path):
+        with open(path, "w", encoding="UTF-8") as f:
+            f.write(self.outputProgram())
