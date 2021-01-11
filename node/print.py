@@ -13,7 +13,7 @@ class PrintNode(BaseNode):
     }
     display_name = "メッセージを表示"
 
-    def generate(self, indent_level=0, for_direct_run = False):
+    def generate(self, indent_level=0, for_direct_run=False):
         lst = []
         self._generate(
             lst, "nyancode.message(\"%s\", \"%s\")" %

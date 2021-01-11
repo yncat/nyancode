@@ -23,7 +23,7 @@ class BaseNode:
     def setSingleChildBlock(self, name, child_block):
         self.child_blocks[name] = child_block
 
-    def generate(self, indent_level=0, for_direct_run = False):
+    def generate(self, indent_level=0, for_direct_run=False):
         """コードを生成する。コードは、行ごとに区切ったリストで返すこと。直接実行のためのコードと、出力用のコードを書き分けたい場合は、 for_direct_run を参照して分岐すれば良い。"""
         return ["pass"]
 

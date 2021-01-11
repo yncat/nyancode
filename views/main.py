@@ -290,4 +290,3 @@ class Events(BaseEvents):
             self.parent.projectManager.run()
         except Exception as e:
             dialog(_("実行時エラー"), _("プログラムの実行中にエラーが起きました。\n%s" % e))
-            
