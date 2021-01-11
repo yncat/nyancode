@@ -18,8 +18,10 @@ class NodeEncoder(json.JSONEncoder):
 
 
 class NodeIO():
-    def dump(self, node):
-        return json.dumps(node, cls=NodeEncoder, indent=2)
+    def dump(self, node, pretty=True):
+        """pretty=False にすると、改行されなくなって、全部つながったJSONができる。テスト用。"""
+        indent = 2 if pretty else None
+        return json.dumps(node, cls=NodeEncoder, indent=indent)
 
     def load(self, in_json):
         o = json.loads(in_json)

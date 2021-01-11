@@ -174,6 +174,8 @@ class Events(BaseEvents):
             self.addNode(node.new("PrintNode"))
 
         # 実行関係
+        if selected == menuItemsStore.getRef("EXEC_RUN"):
+            self.run()
         if selected == menuItemsStore.getRef("EXEC_OUTPUTPROGRAM"):
             self.outputProgram()
 
@@ -282,3 +284,10 @@ class Events(BaseEvents):
             dialog(_("エラー"), _("プロジェクトの読み込みに失敗しました。\n%s" % e))
         # end except
         self.parent.updateList()
+
+    def run(self):
+        try:
+            self.parent.projectManager.run()
+        except Exception as e:
+            dialog(_("実行時エラー"), _("プログラムの実行中にエラーが起きました。\n%s" % e))
+            

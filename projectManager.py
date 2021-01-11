@@ -87,3 +87,6 @@ class ProjectManager:
 
     def browseRootNodeContent(self):
         self.browsing_block = self.root_node.child_blocks["block"]
+
+    def run(self):
+        exec(self.outputProgram())

@@ -12,7 +12,7 @@ class TestNodeIO(unittest.TestCase):
         n.setSingleParameter("test_int", 1)
         n.setSingleParameter("test_str", "abc")
         io = nodeIO.NodeIO()
-        dumped = io.dump(n)
+        dumped = io.dump(n, pretty=False)
         expected = '{"name": "TestNode", "parameters": {"test_int": 1, "test_str": "abc"}, "child_blocks": {}}'
         self.assertEqual(dumped, expected)
 
@@ -26,7 +26,7 @@ class TestNodeIO(unittest.TestCase):
         blk.insert(ni)
         n.setSingleChildBlock("block", blk)
         io = nodeIO.NodeIO()
-        dumped = io.dump(n)
+        dumped = io.dump(n, pretty=False)
         expected = '{"name": "TestNode", "parameters": {"test_int": 1, "test_str": "abc"}, "child_blocks": {"block": [{"name": "TestNode", "parameters": {"is_inner": true}, "child_blocks": {}}]}}'
         self.assertEqual(dumped, expected)
 
