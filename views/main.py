@@ -294,4 +294,4 @@ class Events(BaseEvents):
 
     def Exit(self, event=None):
         self.parent.codeBlockList.saveColumnInfo()
-        BaseEvents.Exit(self)
+        BaseEvents.Exit(self, event)
