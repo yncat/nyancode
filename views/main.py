@@ -62,7 +62,7 @@ class MainView(BaseView):
 
     def setupNewProject(self):
         self.projectManager = projectManager.ProjectManager()
-        self.projectManager.new()
+        self.projectManager.new(_("新規プロジェクト"))
 
     def updateList(self):
         self.codeBlockList.DeleteAllItems()
@@ -96,6 +96,12 @@ class Menu(BaseMenu):
         self.hHelpMenu = wx.Menu()
 
         # ファイルメニュー
+        self.RegisterMenuCommand(self.hFileMenu, [
+            "FILE_SAVE",
+        ])
+        self.RegisterMenuCommand(self.hFileMenu, [
+            "FILE_SAVEAS",
+        ])
         self.RegisterMenuCommand(self.hFileMenu, [
             "FILE_EXIT",
         ])

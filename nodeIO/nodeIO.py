@@ -19,7 +19,7 @@ class NodeEncoder(json.JSONEncoder):
 
 class NodeIO():
     def dump(self, node):
-        return json.dumps(node, cls=NodeEncoder)
+        return json.dumps(node, cls=NodeEncoder, indent=2)
 
     def load(self, in_json):
         o = json.loads(in_json)

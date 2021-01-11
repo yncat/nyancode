@@ -13,14 +13,18 @@ class ProjectManager:
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
+        self.project_name = "untitled"
+        self.saved = False  # 一度でも保存していれば True
         self.nodeIO = nodeIO.NodeIO()
         self.log.debug("Created.")
 
-    def new(self):
+    def new(self, project_name):
         """新規作成"""
         self.root_node = node.new("RootNode")
         self.root_node.setSingleChildBlock("block", block.Block())
         self.browsing_block = self.root_node.child_blocks["block"]
+        self.project_name = project_name
+        self.saved = False
         self.log.debug("Initialized a new project.")
 
     def getList(self):
@@ -48,3 +52,6 @@ class ProjectManager:
 
     def outputProgram(self):
         return "\n".join(self.root_node.generate())
+
+    def outputProject(self):
+        return self.nodeIO.dump(self.root_node)
