@@ -9,5 +9,12 @@ class TestNode(unittest.TestCase):
     def test_new(self):
         n = node.new("TestNode")
         self.assertTrue(isinstance(n, node.test.TestNode))
-        n2 = node.new("nonexistent")
-        self.assertIsNone(n2)
+        self.assertRaises(ValueError, lambda: node.new("nonexistent"))
+
+    def test_parameterOrBlankString(self):
+        n = node.new("TestNode")
+        n.setSingleParameter("test", "test_content")
+        self.assertEqual("test_content", n.parameterOrBlankString("test"))
+        self.assertEqual("", n.parameterOrBlankString("nonexistent"))
+
+

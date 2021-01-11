@@ -204,8 +204,9 @@ class Events(BaseEvents):
 
             # パラメータの型に応じた入力ダイアログを出す
             if node.parameter_constraints[parameter_name] == str:
+                default_value = node.parameterOrBlankString(parameter_name)
                 d = strInputDialog.dialog()
-                d.Initialize(node.parameter_display_names[parameter_name])
+                d.Initialize(node.parameter_display_names[parameter_name], default_value)
                 r = d.Show()
             # end str
 

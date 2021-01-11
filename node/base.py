@@ -31,3 +31,7 @@ class BaseNode:
         ret = " " * (indent_level * INDENT_WIDTH)
         ret += code
         out_lst.append(code)
+
+    def parameterOrBlankString(self, parameter_name):
+        return self.parameters[parameter_name] if parameter_name in self.parameters else ""
+        
