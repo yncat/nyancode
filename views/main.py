@@ -56,9 +56,9 @@ class MainView(BaseView):
             proportion=1)
         self.codeBlockList, self.codeBlockListStatic = creator.listCtrl(
             _("コードブロック"), None, wx.LC_REPORT, proportion=1, sizerFlag=wx.EXPAND)
-        self.codeBlockList.InsertColumn(0, _("名前"))
-        self.codeBlockList.InsertColumn(1, _("パラメータ"))
-        self.codeBlockList.InsertColumn(2, _("コードブロック"))
+        self.codeBlockList.InsertColumn(0, _("名前"),width=280)
+        self.codeBlockList.InsertColumn(1, _("パラメータ"),width=780)
+        self.codeBlockList.InsertColumn(2, _("コードブロック"),width=150)
         self.codeBlockList.loadColumnInfo(self.identifier, "codeBlockList")
 
     def setupNewProject(self):
