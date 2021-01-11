@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
-#View Creator
-#Copyright (C) 2019-2020 yamahubuki <itiro.ishino@gmail.com>
-#Copyright (C) 2019-2020 Hiroki Fujii <hfujii@hisystron.com>
+# View Creator
+# Copyright (C) 2019-2020 yamahubuki <itiro.ishino@gmail.com>
+# Copyright (C) 2019-2020 Hiroki Fujii <hfujii@hisystron.com>
 
 import wx
 import win32api
@@ -9,6 +9,7 @@ import _winxptheme
 
 from views import ViewCreatorBase
 from views.ViewCreatorBase import *
+
 
 class ViewCreator(ViewCreatorBase):
     def __init__(self, *pArg, **kArg):
@@ -25,7 +26,6 @@ class ViewCreator(ViewCreatorBase):
         :param int proportion: Set proportion.
         :param int margin: Set viewCreator's margin.
         """
-        
 
         super().__init__(*pArg, **kArg)
 

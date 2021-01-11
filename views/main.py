@@ -59,6 +59,7 @@ class MainView(BaseView):
         self.codeBlockList.InsertColumn(0, _("名前"))
         self.codeBlockList.InsertColumn(1, _("パラメータ"))
         self.codeBlockList.InsertColumn(2, _("コードブロック"))
+        self.codeBlockList.loadColumnInfo(self.identifier, "codeBlockList")
 
     def setupNewProject(self):
         self.projectManager = projectManager.ProjectManager()
@@ -163,6 +164,7 @@ class Events(BaseEvents):
             self.saveAs()
 
         if selected == menuItemsStore.getRef("FILE_EXIT"):
+            self.parent.codeBlockList.saveColumnInfo()
             self.Exit()
 
         # 編集操作
