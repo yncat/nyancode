@@ -56,9 +56,9 @@ class MainView(BaseView):
             proportion=1)
         self.codeBlockList, self.codeBlockListStatic = creator.listCtrl(
             _("コードブロック"), None, wx.LC_REPORT, proportion=1, sizerFlag=wx.EXPAND)
-        self.codeBlockList.InsertColumn(0, _("名前"),width=280)
-        self.codeBlockList.InsertColumn(1, _("パラメータ"),width=780)
-        self.codeBlockList.InsertColumn(2, _("コードブロック"),width=150)
+        self.codeBlockList.InsertColumn(0, _("名前"), width=280)
+        self.codeBlockList.InsertColumn(1, _("パラメータ"), width=780)
+        self.codeBlockList.InsertColumn(2, _("コードブロック"), width=150)
         self.codeBlockList.loadColumnInfo(self.identifier, "codeBlockList")
 
     def setupNewProject(self):
@@ -206,7 +206,9 @@ class Events(BaseEvents):
             if node.parameter_constraints[parameter_name] == str:
                 default_value = node.parameterOrBlankString(parameter_name)
                 d = strInputDialog.dialog()
-                d.Initialize(node.parameter_display_names[parameter_name], default_value)
+                d.Initialize(
+                    node.parameter_display_names[parameter_name],
+                    default_value)
                 r = d.Show()
             # end str
 
@@ -294,5 +296,15 @@ class Events(BaseEvents):
             dialog(_("実行時エラー"), _("プログラムの実行中にエラーが起きました。\n%s" % e))
 
     def Exit(self, event=None):
+        if self.parent.projectManager.has_changes:
+            dlg = wx.MessageDialog(
+                self.parent.hFrame,
+                _("プロジェクトが変更されています。保存してから終了しますか？"),
+                _("確認"),
+                wx.YES_NO | wx.ICON_QUESTION)
+            ret = dlg.ShowModal()
+            if ret == wx.ID_YES:
+                self.save()
+        # end save
         self.parent.codeBlockList.saveColumnInfo()
         BaseEvents.Exit(self, event)

@@ -16,6 +16,7 @@ class ProjectManager:
         self.browsing_block = None
         self.scope_level = 1
         self.project_path = ""
+        self.has_changes = False
         self.nodeIO = nodeIO.NodeIO()
         self.log.debug("Created.")
 
@@ -26,6 +27,7 @@ class ProjectManager:
         self.browseRootNodeContent()
         self.project_name = project_name
         self.project_path = ""
+        self.has_changes = False
         self.log.debug("Initialized a new project.")
 
     def getList(self):
@@ -45,11 +47,13 @@ class ProjectManager:
         self.log.debug(
             "Added node %s to the currently browsing block %s (index: %s" %
             (node, self.browsing_block, index_str))
+        self.has_changes = True
 
     def deleteMultipleNodes(self, indexList):
         self.log.debug("Deleting %d nodes from block %s." %
                        (len(indexList), self.browsing_block))
         self.browsing_block.deleteMultipleNodes(indexList)
+        self.has_changes = True
 
     def outputProgram(self):
         return "\n".join(self.root_node.generate())

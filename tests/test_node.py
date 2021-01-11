@@ -16,5 +16,3 @@ class TestNode(unittest.TestCase):
         n.setSingleParameter("test", "test_content")
         self.assertEqual("test_content", n.parameterOrBlankString("test"))
         self.assertEqual("", n.parameterOrBlankString("nonexistent"))
-
-
