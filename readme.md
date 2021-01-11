@@ -10,3 +10,8 @@ pip install -r requirements.txt
 
 # run
 python application.py
+
+# test
+python -m unittest discover tests
+
+GUI部分を除いたロジックのテストです。
