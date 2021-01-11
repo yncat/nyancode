@@ -3,6 +3,7 @@ import block
 import constants
 import node
 import nodeIO
+import nyancode_runtime
 from logging import getLogger
 
 
@@ -92,4 +93,4 @@ class ProjectManager:
         self.browsing_block = self.root_node.child_blocks["block"]
 
     def run(self):
-        exec(self.outputProgramForDirectRun())
+        exec(self.outputProgramForDirectRun(), {"nyancode": nyancode_runtime})
