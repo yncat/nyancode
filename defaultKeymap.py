@@ -5,6 +5,7 @@
 defaultKeymap = {}
 
 defaultKeymap["mainView"] = {
+    "FILE_OPEN": "ctrl+o",
     "FILE_SAVE": "ctrl+s",
     "FILE_SAVEAS": "ctrl+shift+s",
     "EDIT_DELETENODE": "delete",

@@ -97,6 +97,9 @@ class Menu(BaseMenu):
 
         # ファイルメニュー
         self.RegisterMenuCommand(self.hFileMenu, [
+            "FILE_OPEN",
+        ])
+        self.RegisterMenuCommand(self.hFileMenu, [
             "FILE_SAVE",
         ])
         self.RegisterMenuCommand(self.hFileMenu, [
@@ -152,6 +155,8 @@ class Events(BaseEvents):
         selected = event.GetId()  # メニュー識別しの数値が出る
 
         # ファイル関係
+        if selected == menuItemsStore.getRef("FILE_OPEN"):
+            self.open()
         if selected == menuItemsStore.getRef("FILE_SAVE"):
             self.save()
         if selected == menuItemsStore.getRef("FILE_SAVEAS"):
@@ -264,3 +269,16 @@ class Events(BaseEvents):
         except Exception as e:
             dialog(_("エラー"), _("プロジェクトの保存に失敗しました。\n%s" % e))
         # end except
+
+    def open(self):
+        with wx.FileDialog(self.parent.hFrame, _("プロジェクトを開く"), wildcard=_("プロジェクトファイル") + "(*.ncp)|*.ncp", style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                return
+            path = fileDialog.GetPath()
+        # end dialog
+        try:
+            self.parent.projectManager.load(path)
+        except Exception as e:
+            dialog(_("エラー"), _("プロジェクトの読み込みに失敗しました。\n%s" % e))
+        # end except
+        self.parent.updateList()

@@ -1,4 +1,5 @@
 dic = {
+    "FILE_OPEN": _("開く"),
     "FILE_SAVE": _("上書き保存"),
     "FILE_SAVEAS": _("名前を付けて保存"),
     "FILE_EXIT": _("終了"),

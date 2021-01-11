@@ -22,10 +22,9 @@ class ProjectManager:
         """新規作成"""
         self.root_node = node.new("RootNode")
         self.root_node.setSingleChildBlock("block", block.Block())
-        self.browsing_block = self.root_node.child_blocks["block"]
+        self.browseRootNodeContent()
         self.project_name = project_name
         self.project_path = ""
-        self.saved = False
         self.log.debug("Initialized a new project.")
 
     def getList(self):
@@ -77,3 +76,14 @@ class ProjectManager:
     def savePythonProgram(self, path):
         with open(path, "w", encoding="UTF-8") as f:
             f.write(self.outputProgram())
+
+    def load(self, path):
+        with open(path, "r", encoding="UTF-8") as f:
+            p = f.read()
+        # end with
+        self.root_node = self.nodeIO.load(p)
+        self.project_path = path
+        self.browseRootNodeContent()
+
+    def browseRootNodeContent(self):
+        self.browsing_block = self.root_node.child_blocks["block"]
