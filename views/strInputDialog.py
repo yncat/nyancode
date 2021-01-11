@@ -11,16 +11,11 @@ import constants
 
 class dialog(BaseDialog):
     def __init__(self):
-        # まだglobalVars.appが未精製の状態での軌道の可能性があるのであえて呼ばない
-        # super().__init__()
-        self.identifier = "StringInputDialog"
-        self.log = getLogger("%s.%s" % (constants.LOG_PREFIX, self.identifier))
-        self.value = None
-        self.viewMode = "white"
+        super().__init__("StringInputDialog")
 
     def Initialize(self, parameter_display_name):
         self.log.debug("created")
-        super().Initialize(None, _("文字列引数の入力"), 0)
+        super().Initialize(None, _("文字列引数の入力"))
         self.parameter_display_name = parameter_display_name
         self.InstallControls()
         return True
