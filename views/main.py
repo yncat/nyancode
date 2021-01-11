@@ -151,6 +151,12 @@ class Events(BaseEvents):
 
         selected = event.GetId()  # メニュー識別しの数値が出る
 
+        # ファイル関係
+        if selected == menuItemsStore.getRef("FILE_SAVE"):
+            self.save()
+        if selected == menuItemsStore.getRef("FILE_SAVEAS"):
+            self.saveAs()
+        
         if selected == menuItemsStore.getRef("FILE_EXIT"):
             self.Exit()
 
@@ -238,3 +244,24 @@ class Events(BaseEvents):
         except Exception as e:
             dialog(_("エラー"), "プログラムの出力中にエラーが発生しました。\n%s" % e)
         # end except
+
+    def save(self):
+        if self.parent.projectManager.mustSaveAs():
+            self.saveAs()
+            return
+        #end must save as
+        self.parent.projectManager.save()
+
+    def saveAs(self):
+        with wx.FileDialog(self.parent.hFrame, _("プロジェクトを保存"), wildcard=_("プロジェクトファイル") + "(*.ncp)|*.ncp", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                return
+            pathname = fileDialog.GetPath()
+        # end dialog
+        try:
+            self.parent.projectManager.saveAs(pathname)
+        except Exception as e:
+            dialog(_("エラー"), _("プロジェクトの保存に失敗しました。\n%s" % e))
+        #end except
+
+

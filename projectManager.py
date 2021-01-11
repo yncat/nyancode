@@ -1,3 +1,4 @@
+import os
 import block
 import constants
 import node
@@ -13,8 +14,7 @@ class ProjectManager:
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
-        self.project_name = "untitled"
-        self.saved = False  # 一度でも保存していれば True
+        self.project_path = ""
         self.nodeIO = nodeIO.NodeIO()
         self.log.debug("Created.")
 
@@ -24,6 +24,7 @@ class ProjectManager:
         self.root_node.setSingleChildBlock("block", block.Block())
         self.browsing_block = self.root_node.child_blocks["block"]
         self.project_name = project_name
+        self.project_path = ""
         self.saved = False
         self.log.debug("Initialized a new project.")
 
@@ -55,3 +56,21 @@ class ProjectManager:
 
     def outputProject(self):
         return self.nodeIO.dump(self.root_node)
+
+    def getProjectName(self):
+        if self.project_path == "":
+            return ""
+        #end no project name
+        return os.path.basename(self.project_path).split(".")[0]
+
+    def mustSaveAs(self):
+        return self.project_path == ""
+
+    def saveAs(self, project_path):
+        self.project_path=project_path
+        self.save()
+
+    def save(self):
+        with open(self.project_path, "w", encoding="UTF-8") as f:
+            f.write(self.outputProject())
+
