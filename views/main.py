@@ -60,6 +60,8 @@ class MainView(BaseView):
         self.codeBlockList.InsertColumn(1, _("パラメータ"), width=780)
         self.codeBlockList.InsertColumn(2, _("コードブロック"), width=150)
         self.codeBlockList.loadColumnInfo(self.identifier, "codeBlockList")
+        self.codeBlockList.Bind(
+            wx.EVT_LIST_ITEM_ACTIVATED, self.events.openNode)
 
     def setupNewProject(self):
         self.projectManager = projectManager.ProjectManager()
@@ -172,6 +174,8 @@ class Events(BaseEvents):
         # 編集操作
         if selected == menuItemsStore.getRef("EDIT_DELETENODE"):
             self.deleteNode()
+        if selected == menuItemsStore.getRef("EDIT_OPENNODE"):
+            self.openNode()
 
         # ノード関係
         if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
@@ -243,6 +247,9 @@ class Events(BaseEvents):
         # end canceled
         self.parent.projectManager.deleteMultipleNodes(selected)
         self.parent.updateList()
+
+    def openNode(self, event=None):
+        dialog("test", "opennode")
 
     def outputProgram(self):
         with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
