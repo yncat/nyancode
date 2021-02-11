@@ -33,7 +33,7 @@ class ProjectManager:
     def getList(self):
         lst = []
         for elem in self.browsing_block:
-            lst.append((elem.display_name, str(
+            lst.append((elem.display_name, len(
                 elem.parameters), len(elem.child_blocks)))
         # end for
         self.log.debug(
