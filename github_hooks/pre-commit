@@ -21,7 +21,7 @@ allownonascii=$(git config --type=bool hooks.allownonascii)
 # Redirect output to stderr.
 exec 1>&2
 
-if ! py -m autopep8 -r -i -a -a . ; then
+if ! py -m autopep8 -r -d -a -a . ; then
     echo "Failure in autopep8"
     exit 1
 fi
@@ -30,5 +30,3 @@ if ! py -m unittest discover tests ; then
     echo "Failure in test"
     exit 1
 fi
-
-git add .

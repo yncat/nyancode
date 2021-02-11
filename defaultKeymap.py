@@ -8,6 +8,7 @@ defaultKeymap["mainView"] = {
     "FILE_OPEN": "ctrl+o",
     "FILE_SAVE": "ctrl+s",
     "FILE_SAVEAS": "ctrl+shift+s",
+    "EDIT_OPENNODE": "return",
     "EDIT_DELETENODE": "delete",
     "EXEC_RUN": "f5",
     "EXEC_OUTPUTPROGRAM": "f9",

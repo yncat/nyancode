@@ -112,6 +112,9 @@ class Menu(BaseMenu):
 
         # 編集メニュー
         self.RegisterMenuCommand(self.hEditMenu, [
+            "EDIT_OPENNODE",
+        ])
+        self.RegisterMenuCommand(self.hEditMenu, [
             "EDIT_DELETENODE",
         ])
 
