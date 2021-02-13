@@ -33,4 +33,4 @@ class BaseNode:
         out_lst.append(code)
 
     def parameterOrBlankString(self, parameter_name):
-        return self.parameters[parameter_name] if parameter_name in self.parameters else ""
+        return str(self.parameters[parameter_name]) if parameter_name in self.parameters else ""
