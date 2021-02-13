@@ -1,6 +1,7 @@
 from .test import *
 from .root import *
 from .message import *
+from .wait import *
 
 
 def new(name):

@@ -23,7 +23,7 @@ import project
 from .base import *
 from simpleDialog import *
 
-from views import strInputDialog
+from views import strInputDialog, floatInputDialog
 from views import versionDialog
 
 
@@ -121,11 +121,18 @@ class Menu(BaseMenu):
         ])
 
         # 挿入メニュー
+        # 入出力
         submenu = wx.Menu()
         self.RegisterMenuCommand(submenu, [
             "INSERT_IO_PRINT",
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("入出力"), submenu)
+        # 時間
+        submenu = wx.Menu()
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_TIME_WAIT",
+        ])
+        self.RegisterMenuCommand(self.hInsertMenu, "", _("時間"), submenu)
 
         # 実行メニュー
         self.RegisterMenuCommand(self.hExecMenu, [
@@ -180,6 +187,8 @@ class Events(BaseEvents):
         # ノード関係
         if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
             self.addNode(node.new("MessageNode"))
+        if selected == menuItemsStore.getRef("INSERT_TIME_WAIT"):
+            self.addNode(node.new("WaitNode"))
 
         # 実行関係
         if selected == menuItemsStore.getRef("EXEC_RUN"):
@@ -231,17 +240,22 @@ class Events(BaseEvents):
         self.parent.codeBlockList.Select(index)
 
     def getNodeParameterBasedOnType(self, node, parameter_name):
+        # すでに値が入っている場合は、それを初期値として読み込む
+        default_value = node.parameterOrBlankString(parameter_name)
+
         # パラメータの型に応じた入力ダイアログを出す
         if node.parameter_constraints[parameter_name] == str:
-            # すでに値が入っている場合は、それを初期値として読み込む
-            default_value = node.parameterOrBlankString(parameter_name)
             d = strInputDialog.dialog()
             d.Initialize(
                 node.parameter_display_names[parameter_name],
                 default_value)
-            r = d.Show()
+        elif node.parameter_constraints[parameter_name] == float:
+            d = floatInputDialog.dialog()
+            d.Initialize(
+                node.parameter_display_names[parameter_name],
+                default_value)
         # end str
-
+        r = d.Show()
         if r == wx.ID_CANCEL:
             return None, True
         # end cancel
