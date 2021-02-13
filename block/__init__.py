@@ -18,6 +18,5 @@ class Block():
     def __iter__(self):
         return self.nodes.__iter__()
 
-    def getNodeAt(self,index):
+    def getNodeAt(self, index):
         return self.nodes[index]
-        

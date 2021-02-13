@@ -249,19 +249,17 @@ class Events(BaseEvents):
         self.parent.updateList()
 
     def openNode(self, event=None):
-        index=self.parent.codeBlockList.GetFocusedItem()
-        if index == -1: return
-        enode=self.parent.projectManager.getEditableNodeAt(index)
+        index = self.parent.codeBlockList.GetFocusedItem()
+        if index == -1:
+            return
+        enode = self.parent.projectManager.getEditableNodeAt(index)
         parameters = enode.getParameterDisplayNames()
-        menu=wx.Menu()
-        i=10001 # ブロックパラメータの編集は ID 10001から
+        menu = wx.Menu()
+        i = 10001  # ブロックパラメータの編集は ID 10001から
         for elem in parameters:
-            menu.Append(i,_("%(parameter)sを編集") % {"parameter": elem})
-        selected = self.parent.codeBlockList.GetPopupMenuSelectionFromUser(menu)
-
-
-
-
+            menu.Append(i, _("%(parameter)sを編集") % {"parameter": elem})
+        selected = self.parent.codeBlockList.GetPopupMenuSelectionFromUser(
+            menu)
 
     def outputProgram(self):
         with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
