@@ -208,29 +208,44 @@ class Events(BaseEvents):
             # end cancel
 
             parameter_name = parameter_names[input_index]
-
-            # パラメータの型に応じた入力ダイアログを出す
-            if node.parameter_constraints[parameter_name] == str:
-                default_value = node.parameterOrBlankString(parameter_name)
-                d = strInputDialog.dialog()
-                d.Initialize(
-                    node.parameter_display_names[parameter_name],
-                    default_value)
-                r = d.Show()
-            # end str
-
-            if r == wx.ID_CANCEL:
+            value, inner_canceled = self.getNodeParameterBasedOnType(
+                node, parameter_name)
+            if inner_canceled:
                 input_index -= 1
                 continue
             # end cancel
-            node.setSingleParameter(parameter_name, d.getData())
+            node.setSingleParameter(parameter_name, value)
             input_index += 1
         # end while
+
+        # パラメータ入力を全部キャンセルされたら、ブロックの追加をやめる
+        if canceled:
+            dialog(_("取り消し"), _("ブロックの追加を取り消しました。"))
+            return
+        # end cancel
+
         index = self.parent.codeBlockList.GetFocusedItem() + 1
         self.parent.projectManager.insertNodeToCurrentBlock(node, index=index)
         self.parent.updateList()
         self.parent.codeBlockList.Focus(index)
         self.parent.codeBlockList.Select(index)
+
+    def getNodeParameterBasedOnType(self, node, parameter_name):
+        # パラメータの型に応じた入力ダイアログを出す
+        if node.parameter_constraints[parameter_name] == str:
+            # すでに値が入っている場合は、それを初期値として読み込む
+            default_value = node.parameterOrBlankString(parameter_name)
+            d = strInputDialog.dialog()
+            d.Initialize(
+                node.parameter_display_names[parameter_name],
+                default_value)
+            r = d.Show()
+        # end str
+
+        if r == wx.ID_CANCEL:
+            return None, True
+        # end cancel
+        return d.getData(), False
 
     def deleteNode(self):
         selected = self.parent.getSelectedIndices()
@@ -252,8 +267,8 @@ class Events(BaseEvents):
         index = self.parent.codeBlockList.GetFocusedItem()
         if index == -1:
             return
-        enode = self.parent.projectManager.getEditableNodeAt(index)
-        parameters = enode.getParameterDisplayNames()
+        node = self.parent.projectManager.getNodeAt(index)
+        parameters = list(node.parameter_display_names.values())
         menu = wx.Menu()
         i = 10001  # ブロックパラメータの編集は ID 10001から
         for elem in parameters:

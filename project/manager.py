@@ -5,7 +5,6 @@ import node
 import nodeIO
 import nyancode_runtime
 from logging import getLogger
-from .editableNode import *
 
 
 class Manager:
@@ -100,5 +99,6 @@ class Manager:
     def run(self):
         exec(self.outputProgramForDirectRun(), {"nyancode": nyancode_runtime})
 
-    def getEditableNodeAt(self, index):
-        return EditableNode(self.browsing_block.getNodeAt(index))
+    def getNodeAt(self, index):
+        """現在閲覧中のブロックの、指定したインデックスのノードを取得。"""
+        return self.browsing_block.getNodeAt(index)
