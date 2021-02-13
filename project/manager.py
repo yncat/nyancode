@@ -5,9 +5,10 @@ import node
 import nodeIO
 import nyancode_runtime
 from logging import getLogger
+from .editableNode import *
 
 
-class ProjectManager:
+class Manager:
     def __init__(self):
         self.log = getLogger(
             "%s.%s" %
@@ -98,3 +99,6 @@ class ProjectManager:
 
     def run(self):
         exec(self.outputProgramForDirectRun(), {"nyancode": nyancode_runtime})
+
+    def getEditableNodeAt(self, index):
+        return EditableNode(self.browsing_block.getNodeAt(index))

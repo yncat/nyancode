@@ -18,7 +18,7 @@ import globalVars
 import keymap
 import menuItemsStore
 import node
-import projectManager
+import project
 
 from .base import *
 from simpleDialog import *
@@ -64,7 +64,7 @@ class MainView(BaseView):
             wx.EVT_LIST_ITEM_ACTIVATED, self.events.openNode)
 
     def setupNewProject(self):
-        self.projectManager = projectManager.ProjectManager()
+        self.projectManager = project.Manager()
         self.projectManager.new(_("新規プロジェクト"))
 
     def updateList(self):
@@ -249,7 +249,19 @@ class Events(BaseEvents):
         self.parent.updateList()
 
     def openNode(self, event=None):
-        dialog("test", "opennode")
+        index=self.parent.codeBlockList.GetFocusedItem()
+        if index == -1: return
+        enode=self.parent.projectManager.getEditableNodeAt(index)
+        parameters = enode.getParameterDisplayNames()
+        menu=wx.Menu()
+        i=10001 # ブロックパラメータの編集は ID 10001から
+        for elem in parameters:
+            menu.Append(i,_("%(parameter)sを編集") % {"parameter": elem})
+        selected = self.parent.codeBlockList.GetPopupMenuSelectionFromUser(menu)
+
+
+
+
 
     def outputProgram(self):
         with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
