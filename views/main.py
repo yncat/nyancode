@@ -268,13 +268,24 @@ class Events(BaseEvents):
         if index == -1:
             return
         node = self.parent.projectManager.getNodeAt(index)
-        parameters = list(node.parameter_display_names.values())
         menu = wx.Menu()
-        i = 10001  # ブロックパラメータの編集は ID 10001から
-        for elem in parameters:
+        i = 10000  # ブロックパラメータの編集は ID 10000から
+        for elem in list(node.parameter_display_names.values()):
             menu.Append(i, _("%(parameter)sを編集") % {"parameter": elem})
         selected = self.parent.codeBlockList.GetPopupMenuSelectionFromUser(
             menu)
+        if selected >= 10000:
+            self.editSingleParameter(node, list(
+                node.parameters)[selected - 10000])
+        # end edit single parameter
+        self.parent.updateList
+
+    def editSingleParameter(self, node, parameter_name):
+        value, canceled = self.getNodeParameterBasedOnType(
+            node, parameter_name)
+        if canceled:
+            return
+        node.setSingleParameter(parameter_name, value)
 
     def outputProgram(self):
         with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
