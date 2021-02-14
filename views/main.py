@@ -246,8 +246,10 @@ class Events(BaseEvents):
         b = list(node.child_block_display_names.values())
         # 1: display_name_1\n2: display_name2... のような文字を作る、表示用
         bs = "\n".join(["%d: %s" % (i + 1, b[i]) for i in range(len(b))])
-        dialog(_("サブブロック追加"), _("%(num)d個のサブブロックが追加されました。") %
-               {"num": len(b)} + "\n" + bs)
+        if len(b) > 0:
+            dialog(_("サブブロック追加"), _("%(num)d個のサブブロックが追加されました。") %
+                   {"num": len(b)} + "\n" + bs)
+        # end ブロック追加したのでメッセージ表示
         index = self.parent.codeBlockList.GetFocusedItem() + 1
         self.parent.projectManager.insertNodeToCurrentBlock(node, index=index)
         self.parent.updateList()
@@ -312,7 +314,11 @@ class Events(BaseEvents):
             self.editSingleParameter(node, list(
                 node.parameters)[selected - 10000])
         # end edit single parameter
-        self.parent.updateList
+        if selected >= 20000:
+            self.parent.projectManager.enterSubBlock(
+                index, list(node.child_blocks)[selected - 20000])
+        # end サブブロックに入る
+        self.parent.updateList()
 
     def editSingleParameter(self, node, parameter_name):
         value, canceled = self.getNodeParameterBasedOnType(

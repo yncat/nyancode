@@ -32,6 +32,7 @@ class Manager:
 
     def getList(self):
         lst = []
+        print(self.browsing_block)
         for elem in self.browsing_block:
             lst.append((elem.display_name, len(
                 elem.parameters), len(elem.child_blocks)))
@@ -102,3 +103,8 @@ class Manager:
     def getNodeAt(self, index):
         """現在閲覧中のブロックの、指定したインデックスのノードを取得。"""
         return self.browsing_block.getNodeAt(index)
+
+    def enterSubBlock(self, index, sub_block_name):
+        self.scope_level += 1
+        node = self.getNodeAt(index)
+        self.browsing_block = node.child_blocks[sub_block_name]
