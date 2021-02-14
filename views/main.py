@@ -301,9 +301,14 @@ class Events(BaseEvents):
         i = 10000  # ブロックパラメータの編集は ID 10000から
         for elem in list(node.parameter_display_names.values()):
             menu.Append(i, _("%(parameter)sを編集") % {"parameter": elem})
+        # end ブロックパラメータ編集の選択肢
+        i = 20000  # サブブロックへの移動は ID 20000から
+        for elem in list(node.child_block_display_names.values()):
+            menu.Append(i, _("%(block)s サブブロックに入る") % {"block": elem})
+        # end サブブロックに入る選択肢
         selected = self.parent.codeBlockList.GetPopupMenuSelectionFromUser(
             menu)
-        if selected >= 10000:
+        if selected >= 10000 and selected < 20000:
             self.editSingleParameter(node, list(
                 node.parameters)[selected - 10000])
         # end edit single parameter
