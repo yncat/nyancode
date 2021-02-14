@@ -32,7 +32,6 @@ class Manager:
 
     def getList(self):
         lst = []
-        print(self.browsing_block)
         for elem in self.browsing_block:
             lst.append((elem.display_name, len(
                 elem.parameters), len(elem.child_blocks)))
@@ -108,3 +107,26 @@ class Manager:
         self.scope_level += 1
         node = self.getNodeAt(index)
         self.browsing_block = node.child_blocks[sub_block_name]
+
+    def leaveSubBlock(self):
+        """現在閲覧中のブロックから出て、１個上の階層のブロックへ移動する。ブロックから出た後、復帰すべきインデックスを返す。これ以上出られない場合は None を返す。"""
+        if self.scope_level == 0:
+            return None
+        # 出た後、今さっきまで入っていたブロックにフォーカスさせたい
+        cb = self.browsing_block
+        self.scope_level -= 1
+        self.browsing_block = cb.parent
+        # さっきまでいたブロックが含まれているノードを探す
+        found = 0
+        i = 0
+        for elem in self.browsing_block.nodes:
+            if cb in elem.child_blocks:
+                found = i
+                break
+            # end 見つけた
+            i += 1
+        # end 探した
+        return found
+
+    def getBrowsingBlock(self):
+        return self.browsing_block

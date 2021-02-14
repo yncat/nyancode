@@ -8,6 +8,7 @@ dic = {
     "INSERT_IO_PRINT": _("メッセージを表示"),
     "INSERT_IO_QUESTION": _("「はい/いいえ」で分岐"),
     "INSERT_TIME_WAIT": _("一定時間待つ"),
+    "MOVE_LEAVE": _("一つ上の階層へ"),
     "EXEC_RUN": _("実行"),
     "EXEC_OUTPUTPROGRAM": _("Python コードを出力"),
     "HELP_UPDATE": _("最新バージョンを確認(&U)") + "...",

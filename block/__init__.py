@@ -4,8 +4,9 @@ INDENT_WIDTH = 4
 class Block():
     """コードのまとまりを表す。"""
 
-    def __init__(self):
+    def __init__(self, parent=None):
         self.nodes = []
+        self.parent = parent
 
     def insert(self, nd, index=-1):
         if index == -1 or index >= len(self.nodes):

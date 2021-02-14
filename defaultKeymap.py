@@ -10,6 +10,7 @@ defaultKeymap["mainView"] = {
     "FILE_SAVEAS": "ctrl+shift+s",
     "EDIT_OPENNODE": "return/applications",
     "EDIT_DELETENODE": "delete",
+    "MOVE_LEAVE": "back",
     "EXEC_RUN": "f5",
     "EXEC_OUTPUTPROGRAM": "f9",
     "HELP_UPDATE": "",

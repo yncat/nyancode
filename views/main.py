@@ -96,6 +96,7 @@ class Menu(BaseMenu):
         self.hFileMenu = wx.Menu()
         self.hEditMenu = wx.Menu()
         self.hInsertMenu = wx.Menu()
+        self.hMoveMenu = wx.Menu()
         self.hExecMenu = wx.Menu()
         self.hHelpMenu = wx.Menu()
 
@@ -138,6 +139,10 @@ class Menu(BaseMenu):
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("時間"), submenu)
 
+        # 移動メニュー
+        self.RegisterMenuCommand(self.hMoveMenu, [
+            "MOVE_LEAVE",
+        ])
         # 実行メニュー
         self.RegisterMenuCommand(self.hExecMenu, [
             "EXEC_RUN",
@@ -156,6 +161,7 @@ class Menu(BaseMenu):
         self.hMenuBar.Append(self.hFileMenu, _("ファイル"))
         self.hMenuBar.Append(self.hEditMenu, _("編集"))
         self.hMenuBar.Append(self.hInsertMenu, _("挿入"))
+        self.hMenuBar.Append(self.hMoveMenu, _("移動"))
         self.hMenuBar.Append(self.hExecMenu, _("実行"))
         self.hMenuBar.Append(self.hHelpMenu, _("ヘルプ"))
         target.SetMenuBar(self.hMenuBar)
@@ -196,6 +202,9 @@ class Events(BaseEvents):
         if selected == menuItemsStore.getRef("INSERT_TIME_WAIT"):
             self.addNode(node.new("WaitNode"))
 
+        # 移動関係
+        if selected == menuItemsStore.getRef("MOVE_LEAVE"):
+            self.leave()
         # 実行関係
         if selected == menuItemsStore.getRef("EXEC_RUN"):
             self.run()
@@ -241,7 +250,9 @@ class Events(BaseEvents):
 
         # 必要なブロックを追加
         for elem in node.child_block_constraints:
-            node.setSingleChildBlock(elem, block.Block())
+            node.setSingleChildBlock(
+                elem, block.Block(
+                    parent=self.parent.projectManager.getBrowsingBlock()))
         # end for
         b = list(node.child_block_display_names.values())
         # 1: display_name_1\n2: display_name2... のような文字を作る、表示用
@@ -380,6 +391,13 @@ class Events(BaseEvents):
             self.parent.projectManager.run()
         except Exception as e:
             dialog(_("実行時エラー"), _("プログラムの実行中にエラーが起きました。\n%s" % e))
+
+    def leave(self):
+        ret = self.parent.projectManager.leaveSubBlock()
+        if ret is None:
+            return
+        self.parent.updateList()
+        self.parent.codeBlockList.Focus(ret)
 
     def Exit(self, event=None):
         if self.parent.projectManager.has_changes:
