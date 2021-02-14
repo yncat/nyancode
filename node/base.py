@@ -8,7 +8,9 @@ class BaseNode:
     # 引数の表示名を指定。ビューで引数を入力するときに、ウィンドウタイトルに表示される。
     parameter_display_names = {}
     # 必要な子ブロックの名前を指定
-    child_block_constraints = {}
+    child_block_constraints = set()
+    # 子ブロックの表示名を指定。ビューでブロックを表現するときに使われる。
+    child_block_display_names = {}
     # ノードの表示名を指定
     display_name = ""
 
@@ -28,9 +30,11 @@ class BaseNode:
         return ["pass"]
 
     def _generate(self, out_lst, code, indent_level=0):
+        # TODO: remove duplicate (block/__init__)
         ret = " " * (indent_level * INDENT_WIDTH)
         ret += code
-        out_lst.append(code)
+        out_lst.append(ret)
 
     def parameterOrBlankString(self, parameter_name):
-        return str(self.parameters[parameter_name]) if parameter_name in self.parameters else ""
+        return str(self.parameters[parameter_name]
+                   ) if parameter_name in self.parameters else ""

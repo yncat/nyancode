@@ -37,9 +37,45 @@ class TestCodegen(unittest.TestCase):
             generated[2],
             "nyancode.message(\"hello\", \"hello\")")
 
-    def test_print(self):
+    def test_indented_node(self):
+        n = node.new("MessageNode")
+        n.setSingleParameter("title", "meow")
+        n.setSingleParameter("message", "meow")
+        generated = n.generate(indent_level=1)
+        self.assertEqual(
+            "    nyancode.message(\"meow\", \"meow\")",
+            generated[0])
+
+    def test_message(self):
         n = node.new("MessageNode")
         n.setSingleParameter("title", "meow")
         n.setSingleParameter("message", "meow")
         generated = n.generate()
         self.assertEqual("nyancode.message(\"meow\", \"meow\")", generated[0])
+
+    def test_wait(self):
+        n = node.new("WaitNode")
+        n.setSingleParameter("time", 1.5)
+        generated = n.generate()
+        self.assertEqual("nyancode.wait(1.5)", generated[0])
+
+    def test_question(self):
+        n = node.new("QuestionNode")
+        n.setSingleParameter("title", "title")
+        n.setSingleParameter("message", "message")
+        nsub = node.new("MessageNode")
+        nsub.setSingleParameter("title", "subtitle")
+        nsub.setSingleParameter("message", "submessage")
+        yblk = Block()
+        yblk.insert(nsub)
+        nblk = Block()
+        n.setSingleChildBlock("yes", yblk)
+        n.setSingleChildBlock("no", nblk)
+        generated = n.generate()
+        want = [
+            "if nyancode.question(\"title\", \"message\"):",
+            "    nyancode.message(\"subtitle\", \"submessage\")",
+            "else:",
+            "    pass"
+        ]
+        self.assertEqual(want, generated)

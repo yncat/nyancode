@@ -11,6 +11,7 @@ import re
 import ctypes
 import pywintypes
 
+import block
 import constants
 import errorCodes
 import defaultKeymap
@@ -126,6 +127,9 @@ class Menu(BaseMenu):
         self.RegisterMenuCommand(submenu, [
             "INSERT_IO_PRINT",
         ])
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_IO_QUESTION",
+        ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("入出力"), submenu)
         # 時間
         submenu = wx.Menu()
@@ -187,6 +191,8 @@ class Events(BaseEvents):
         # ノード関係
         if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
             self.addNode(node.new("MessageNode"))
+        if selected == menuItemsStore.getRef("INSERT_IO_QUESTION"):
+            self.addNode(node.new("QuestionNode"))
         if selected == menuItemsStore.getRef("INSERT_TIME_WAIT"):
             self.addNode(node.new("WaitNode"))
 
@@ -233,6 +239,15 @@ class Events(BaseEvents):
             return
         # end cancel
 
+        # 必要なブロックを追加
+        for elem in node.child_block_constraints:
+            node.setSingleChildBlock(elem, block.Block())
+        # end for
+        b = list(node.child_block_display_names.values())
+        # 1: display_name_1\n2: display_name2... のような文字を作る、表示用
+        bs = "\n".join(["%d: %s" % (i + 1, b[i]) for i in range(len(b))])
+        dialog(_("サブブロック追加"), _("%(num)d個のサブブロックが追加されました。") %
+               {"num": len(b)} + "\n" + bs)
         index = self.parent.codeBlockList.GetFocusedItem() + 1
         self.parent.projectManager.insertNodeToCurrentBlock(node, index=index)
         self.parent.updateList()

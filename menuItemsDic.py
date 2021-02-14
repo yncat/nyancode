@@ -6,6 +6,7 @@ dic = {
     "EDIT_OPENNODE": _("開く"),
     "EDIT_DELETENODE": _("削除"),
     "INSERT_IO_PRINT": _("メッセージを表示"),
+    "INSERT_IO_QUESTION": _("「はい/いいえ」で分岐"),
     "INSERT_TIME_WAIT": _("一定時間待つ"),
     "EXEC_RUN": _("実行"),
     "EXEC_OUTPUTPROGRAM": _("Python コードを出力"),

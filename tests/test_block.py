@@ -60,3 +60,27 @@ class TestBlock(unittest.TestCase):
         blk.insert(r)
         blk.deleteMultipleNodes([1, 2])
         self.assertEqual(list(blk), [p1])
+
+    def test_generate_empty(self):
+        blk = Block()
+        self.assertEqual(["pass"], blk.generate())
+
+    def test_generate(self):
+        p1 = node.new("MessageNode")
+        p1.setSingleParameter("title", "title")
+        p1.setSingleParameter("message", "message")
+        blk = Block()
+        blk.insert(p1)
+        self.assertEqual(
+            ["nyancode.message(\"title\", \"message\")"],
+            blk.generate())
+
+    def test_generate_indented(self):
+        p1 = node.new("MessageNode")
+        p1.setSingleParameter("title", "title")
+        p1.setSingleParameter("message", "message")
+        blk = Block()
+        blk.insert(p1)
+        self.assertEqual(
+            ["    nyancode.message(\"title\", \"message\")"],
+            blk.generate(1))
