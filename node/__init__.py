@@ -5,11 +5,11 @@ from .question import *
 from .wait import *
 
 
-def new(name):
+def new(name, parent_block=None):
     try:
         cls = globals()[name]
     except KeyError:
         raise ValueError("node not found. identifier: %s" % name)
     # end except
-    ret = cls()
+    ret = cls(parent_block=parent_block)
     return ret

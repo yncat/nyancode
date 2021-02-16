@@ -6,6 +6,11 @@ from block import Block
 
 
 class TestBlock(unittest.TestCase):
+    def test_set_parent_node(self):
+        n = node.new("TestNode")
+        blk = Block(n)
+        self.assertEqual(n, blk.parent_node)
+
     def test_insert_last(self):
         r = node.new("RootNode")
         p = node.new("MessageNode")

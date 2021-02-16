@@ -25,21 +25,21 @@ class NodeIO():
 
     def load(self, in_json):
         o = json.loads(in_json)
-        return self._load(o)
+        return self._loadNode(o)
 
-    def _load(self, o):
-        ret = node.new(o["name"])
+    def _loadNode(self, o, parent_block=None):
+        n = node.new(o["name"], parent_block=parent_block)
         for name, value in o["parameters"].items():
-            ret.setSingleParameter(name, value)
+            n.setSingleParameter(name, value)
         # end set parameters
         for name, value in o["child_blocks"].items():
-            ret.setSingleChildBlock(name, self._loadBlock(value))
+            n.setSingleChildBlock(name, self._loadBlock(value, parent_node=n))
         # end set child nodes
-        return ret
+        return n
 
-    def _loadBlock(self, o):
-        blk = Block()
+    def _loadBlock(self, o, parent_node):
+        blk = Block(parent_node=parent_node)
         for elem in o:
-            blk.insert(self._load(elem))
+            blk.insert(self._loadNode(elem, parent_block=blk))
         # end for
         return blk

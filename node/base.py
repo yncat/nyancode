@@ -14,7 +14,8 @@ class BaseNode:
     # ノードの表示名を指定
     display_name = ""
 
-    def __init__(self):
+    def __init__(self, parent_block=None):
+        self.parent_block = parent_block
         self.parameters = {}
         self.child_blocks = {}
         self.name = self.__class__.__name__
