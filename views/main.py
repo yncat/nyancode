@@ -65,7 +65,8 @@ class MainView(BaseView):
             wx.EVT_LIST_ITEM_ACTIVATED, self.events.openNode)
 
     def setupNewProject(self):
-        self.projectManager = project.Manager()
+        l = getLogger("%s.%s" % (constants.LOG_PREFIX, "ProjectManager"))
+        self.projectManager = project.Manager(logger=l)
         self.projectManager.new(_("新規プロジェクト"))
 
     def updateList(self):

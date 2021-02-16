@@ -4,21 +4,18 @@ import constants
 import node
 import nodeIO
 import nyancode_runtime
-from logging import getLogger
 
 
 class Manager:
-    def __init__(self):
-        self.log = getLogger(
-            "%s.%s" %
-            (constants.LOG_PREFIX, "ProjectManager"))
+    def __init__(self, logger=None):
+        self.logger = logger
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
         self.project_path = ""
         self.has_changes = False
         self.nodeIO = nodeIO.NodeIO()
-        self.log.debug("Created.")
+        self._logDebug("Created.")
 
     def new(self, project_name):
         """新規作成"""
@@ -28,7 +25,7 @@ class Manager:
         self.project_name = project_name
         self.project_path = ""
         self.has_changes = False
-        self.log.debug("Initialized a new project.")
+        self._logDebug("Initialized a new project.")
 
     def getList(self):
         lst = []
@@ -130,3 +127,7 @@ class Manager:
 
     def getBrowsingBlock(self):
         return self.browsing_block
+
+    def _logDebug(self, msg):
+        if self.logger:
+            self.logger.debug(msg)
