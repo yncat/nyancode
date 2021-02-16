@@ -33,7 +33,7 @@ class Manager:
             lst.append((elem.display_name, len(
                 elem.parameters), len(elem.child_blocks)))
         # end for
-        self.log.debug(
+        self._logDebug(
             "Retrieved %d nodes from the currently browsing block %s." %
             (len(lst), self.browsing_block))
         return lst
@@ -41,13 +41,13 @@ class Manager:
     def insertNodeToCurrentBlock(self, node, index=-1):
         index_str = str(index) if index != -1 else "last"
         self.browsing_block.insert(node, index=index)
-        self.log.debug(
+        self._logDebug(
             "Added node %s to the currently browsing block %s (index: %s" %
             (node, self.browsing_block, index_str))
         self.has_changes = True
 
     def deleteMultipleNodes(self, indexList):
-        self.log.debug("Deleting %d nodes from block %s." %
+        self._logDebug("Deleting %d nodes from block %s." %
                        (len(indexList), self.browsing_block))
         self.browsing_block.deleteMultipleNodes(indexList)
         self.has_changes = True
