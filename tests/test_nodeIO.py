@@ -54,3 +54,6 @@ class TestNodeIO(unittest.TestCase):
         io = nodeIO.NodeIO()
         loaded = io.load(in_json)
         self.assertTrue(isinstance(loaded.child_blocks["block"], Block))
+        self.assertTrue(expected, loaded.child_blocks["block"].parent_node)
+        self.assertTrue(
+            blk, loaded.child_blocks["block"].getNodeAt(0).parent_block)
