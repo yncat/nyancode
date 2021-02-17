@@ -4,6 +4,7 @@ import unittest
 import block
 import project
 import node
+import nodeIO
 
 
 def testProjectNode():
@@ -98,3 +99,9 @@ class TestProjectManager(unittest.TestCase):
         ])
         self.assertEqual(want, m.outputProgramForDirectRun())
 
+    def test_outputProject(self):
+        n = testProjectNode()
+        m = project.Manager(logger=None)
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        self.assertEqual(nodeIO.NodeIO().dump(n), m.outputProject())
