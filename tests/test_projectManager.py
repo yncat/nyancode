@@ -105,3 +105,23 @@ class TestProjectManager(unittest.TestCase):
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
         self.assertEqual(nodeIO.NodeIO().dump(n), m.outputProject())
+
+    def test_GetProjectName(self):
+        n = testProjectNode()
+        m = project.Manager(logger=None)
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.project_path = ""
+        self.assertEqual("", m.getProjectName())
+        m.project_path = "D:\\test\\project.pj"
+        self.assertEqual("project", m.getProjectName())
+
+    def test_mustSaveAs(self):
+        n = testProjectNode()
+        m = project.Manager(logger=None)
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.project_path = ""
+        self.assertTrue(m.mustSaveAs())
+        m.project_path = "D:\\test\\project.pj"
+        self.assertFalse(m.mustSaveAs())
