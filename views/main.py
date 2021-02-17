@@ -19,6 +19,7 @@ import globalVars
 import keymap
 import menuItemsStore
 import node
+import nodeIO
 import project
 
 from .base import *
@@ -66,7 +67,10 @@ class MainView(BaseView):
 
     def setupNewProject(self):
         l = getLogger("%s.%s" % (constants.LOG_PREFIX, "ProjectManager"))
-        self.projectManager = project.Manager(logger=l)
+        nio = nodeIO.NodeIO()
+        pio = project.IO()
+        self.projectManager = project.Manager(
+            logger=l, nodeIO=nio, projectIO=pio)
         self.projectManager.new(_("新規プロジェクト"))
 
     def updateList(self):

@@ -2,19 +2,19 @@ import os
 import block
 import constants
 import node
-import nodeIO
 import nyancode_runtime
 
 
 class Manager:
-    def __init__(self, logger=None):
+    def __init__(self, logger=None, nodeIO=None, projectIO=None):
         self.logger = logger
+        self.nodeIO = nodeIO
+        self.projectIO = projectIO
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
         self.project_path = ""
         self.has_changes = False
-        self.nodeIO = nodeIO.NodeIO()
         self._logDebug("Created.")
 
     def new(self, project_name):
@@ -59,6 +59,8 @@ class Manager:
         return "\n".join(self.root_node.generate(for_direct_run=True))
 
     def outputProject(self):
+        if not self.nodeIO:
+            return
         return self.nodeIO.dump(self.root_node)
 
     def getProjectName(self):
@@ -75,17 +77,20 @@ class Manager:
         self.save()
 
     def save(self):
-        with open(self.project_path, "w", encoding="UTF-8") as f:
-            f.write(self.outputProject())
+        if not self.projectIO:
+            return
+        self.projectIO.dump(self.project_path, self.outputProject())
+        self.has_changes = False
 
     def savePythonProgram(self, path):
-        with open(path, "w", encoding="UTF-8") as f:
-            f.write(self.outputProgram())
+        if not self.projectIO:
+            return
+        self.projectIO.dump(path, self.outputProgram())
 
     def load(self, path):
-        with open(path, "r", encoding="UTF-8") as f:
-            p = f.read()
-        # end with
+        if not self.projectIO or not self.nodeIO:
+            return
+        p = self.projectIO.load(path)
         self.root_node = self.nodeIO.load(p)
         self.project_path = path
         self.browseRootNodeContent()

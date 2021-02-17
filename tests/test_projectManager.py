@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+from unittest.mock import Mock
 import block
 import project
 import node
@@ -20,7 +21,7 @@ def testProjectNode():
 
 class TestProjectManager(unittest.TestCase):
     def test_new(self):
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.new("new project")
         # root nodeができている
         self.assertTrue(isinstance(m.root_node, node.RootNode))
@@ -35,7 +36,7 @@ class TestProjectManager(unittest.TestCase):
 
     def test_getList(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
         want = [
@@ -45,7 +46,7 @@ class TestProjectManager(unittest.TestCase):
 
     def test_insertNodeToCurrentBlock(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.has_changes = False
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
@@ -63,7 +64,7 @@ class TestProjectManager(unittest.TestCase):
 
     def test_deleteMultipleNodes(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.has_changes = False
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
@@ -75,7 +76,7 @@ class TestProjectManager(unittest.TestCase):
 
     def test_outputProgram(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
         want = '\n'.join([
@@ -88,7 +89,7 @@ class TestProjectManager(unittest.TestCase):
 
     def test_outputProgramForDirectRun(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
         # direct run だとimport分が消える
@@ -101,14 +102,16 @@ class TestProjectManager(unittest.TestCase):
 
     def test_outputProject(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        nodeIOMock = Mock()
+        m = project.Manager(nodeIO=nodeIOMock)
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
-        self.assertEqual(nodeIO.NodeIO().dump(n), m.outputProject())
+        m.outputProject()
+        nodeIOMock.dump.assert_called()
 
     def test_GetProjectName(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
         m.project_path = ""
@@ -118,7 +121,7 @@ class TestProjectManager(unittest.TestCase):
 
     def test_mustSaveAs(self):
         n = testProjectNode()
-        m = project.Manager(logger=None)
+        m = project.Manager()
         m.root_node = n
         m.browsing_block = n.child_blocks["block"]
         m.project_path = ""
