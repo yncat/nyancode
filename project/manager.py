@@ -117,12 +117,12 @@ class Manager:
         # 出た後、今さっきまで入っていたブロックにフォーカスさせたい
         cb = self.browsing_block
         self.scope_level -= 1
-        self.browsing_block = cb.parent
+        self.browsing_block = cb.parent_node.parent_block
         # さっきまでいたブロックが含まれているノードを探す
-        found = 0
+        found = -1
         i = 0
         for elem in self.browsing_block.nodes:
-            if cb in elem.child_blocks:
+            if cb in elem.child_blocks.values():
                 found = i
                 break
             # end 見つけた

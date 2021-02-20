@@ -11,11 +11,23 @@ import nodeIO
 def testProjectNode():
     r = node.new("RootNode")
     blk = block.Block()
-    n = node.new("MessageNode")
+    n = node.new("MessageNode", parent_block=blk)
     n.setSingleParameter("title", "title")
     n.setSingleParameter("message", "message")
     blk.insert(n)
     r.setSingleChildBlock("block", blk)
+    return r
+
+
+def nestedProjectNode():
+    r = node.new("RootNode")
+    blk = block.Block()
+    n = node.new("QuestionNode", parent_block=blk)
+    n.setSingleParameter("title", "title")
+    n.setSingleParameter("message", "message")
+    blk.insert(n)
+    r.setSingleChildBlock("block", blk)
+    n.setSingleChildBlock("yes", block.Block(parent_node=n))
     return r
 
 
@@ -194,3 +206,25 @@ class TestProjectManager(unittest.TestCase):
         m.browsing_block = n.child_blocks["block"]
         got = m.getNodeAt(0)
         self.assertEqual(n.child_blocks["block"].nodes[0], got)
+
+    def test_enterSubBlock(self):
+        n = nestedProjectNode()
+        m = project.Manager()
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.enterSubBlock(0, "yes")
+        self.assertEqual(2, m.scope_level)
+        self.assertEqual(
+            n.child_blocks["block"].nodes[0].child_blocks["yes"],
+            m.browsing_block)
+
+    def test_leaveSubBlock(self):
+        n = nestedProjectNode()
+        m = project.Manager()
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.enterSubBlock(0, "yes")
+        ret = m.leaveSubBlock()
+        self.assertEqual(1, m.scope_level)
+        self.assertEqual(n.child_blocks["block"], m.browsing_block)
+        self.assertEqual(0, ret)  # 正しいカーソル位置が返ってきてほしい
