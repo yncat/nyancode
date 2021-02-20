@@ -161,3 +161,36 @@ class TestProjectManager(unittest.TestCase):
         m.browsing_block = n.child_blocks["block"]
         m.savePythonProgram("D:\\test\\project.py")
         projectIOMock.dump.assert_called()
+
+    def test_load(self):
+        n = testProjectNode()
+        nodeIOMock = Mock()
+        nodeIOMock.load = Mock(return_value=n)
+        projectIOMock = Mock()
+        projectIOMock.load = Mock(return_value=nodeIO.NodeIO().dump(n))
+        m = project.Manager(nodeIO=nodeIOMock, projectIO=projectIOMock)
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.load("D:\\test\\project.ncp")
+        projectIOMock.load.assert_called()
+        nodeIOMock.load.assert_called()
+        self.assertEqual(n, m.root_node)
+        self.assertEqual("D:\\test\\project.ncp", m.project_path)
+        self.assertEqual(n.child_blocks["block"], m.browsing_block)
+
+    def test_browseRootNodeContent(self):
+        n = testProjectNode()
+        m = project.Manager()
+        m.root_node = n
+        m.browseRootNodeContent()
+        self.assertEqual(n.child_blocks["block"], m.browsing_block)
+
+# skip test for run
+
+    def test_getNodeAt(self):
+        n = testProjectNode()
+        m = project.Manager()
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        got = m.getNodeAt(0)
+        self.assertEqual(n.child_blocks["block"].nodes[0], got)
