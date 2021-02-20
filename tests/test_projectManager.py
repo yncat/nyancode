@@ -228,3 +228,12 @@ class TestProjectManager(unittest.TestCase):
         self.assertEqual(1, m.scope_level)
         self.assertEqual(n.child_blocks["block"], m.browsing_block)
         self.assertEqual(0, ret)  # 正しいカーソル位置が返ってきてほしい
+
+    def test_leaveSubBlock_atRoot(self):
+        n = nestedProjectNode()
+        m = project.Manager()
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        ret = m.leaveSubBlock()
+        self.assertEqual(1, m.scope_level)
+        self.assertEqual(None, ret)

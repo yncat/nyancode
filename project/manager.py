@@ -112,7 +112,7 @@ class Manager:
 
     def leaveSubBlock(self):
         """現在閲覧中のブロックから出て、１個上の階層のブロックへ移動する。ブロックから出た後、復帰すべきインデックスを返す。これ以上出られない場合は None を返す。"""
-        if self.scope_level == 0:
+        if self.scope_level == 1:
             return None
         # 出た後、今さっきまで入っていたブロックにフォーカスさせたい
         cb = self.browsing_block
@@ -129,9 +129,6 @@ class Manager:
             i += 1
         # end 探した
         return found
-
-    def getBrowsingBlock(self):
-        return self.browsing_block
 
     def _logDebug(self, msg):
         if self.logger:

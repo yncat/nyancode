@@ -257,7 +257,7 @@ class Events(BaseEvents):
         for elem in node.child_block_constraints:
             node.setSingleChildBlock(
                 elem, block.Block(
-                    parent=self.parent.projectManager.getBrowsingBlock()))
+                    parent=self.parent.projectManager.browsing_block))
         # end for
         b = list(node.child_block_display_names.values())
         # 1: display_name_1\n2: display_name2... のような文字を作る、表示用
