@@ -128,3 +128,36 @@ class TestProjectManager(unittest.TestCase):
         self.assertTrue(m.mustSaveAs())
         m.project_path = "D:\\test\\project.pj"
         self.assertFalse(m.mustSaveAs())
+
+    def test_saveAs(self):
+        n = testProjectNode()
+        projectIOMock = Mock()
+        m = project.Manager(projectIO=projectIOMock)
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.has_changes = True
+        m.saveAs("D:\\test\\project.ncp")
+        self.assertEqual("D:\\test\\project.ncp", m.project_path)
+        self.assertFalse(m.has_changes)
+        projectIOMock.dump.assert_called()
+
+    def test_save(self):
+        n = testProjectNode()
+        projectIOMock = Mock()
+        m = project.Manager(projectIO=projectIOMock)
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.has_changes = True
+        m.project_path = "D:\\test\\project.ncp"
+        m.save()
+        self.assertFalse(m.has_changes)
+        projectIOMock.dump.assert_called()
+
+    def test_savePythonProgram(self):
+        n = testProjectNode()
+        projectIOMock = Mock()
+        m = project.Manager(projectIO=projectIOMock)
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        m.savePythonProgram("D:\\test\\project.py")
+        projectIOMock.dump.assert_called()
