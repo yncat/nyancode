@@ -23,7 +23,6 @@ import nodeIO
 import project
 
 from .base import *
-from .running import RunningView
 from simpleDialog import *
 
 from views import strInputDialog, floatInputDialog
@@ -48,8 +47,6 @@ class MainView(BaseView):
         self.setupWidgets()
         self.setupNewProject()
         self.updateList()
-        self.running = RunningView()
-        self.running.Show()
 
     def setupWidgets(self):
         creator = views.ViewCreator.ViewCreator(
@@ -134,16 +131,26 @@ class Menu(BaseMenu):
         # 入出力
         submenu = wx.Menu()
         self.RegisterMenuCommand(submenu, [
-            "INSERT_IO_PRINT",
+            "INSERT_MESSAGE",
         ])
         self.RegisterMenuCommand(submenu, [
-            "INSERT_IO_QUESTION",
+            "INSERT_QUESTION_BRANCH",
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("入出力"), submenu)
+        # 条件分岐
+        submenu = wx.Menu()
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_QUESTION_BRANCH",
+        ])
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_FIFTY_FIFTY_BRANCH",
+        ])
+        self.RegisterMenuCommand(self.hInsertMenu, "", _("条件分岐"), submenu)
+
         # 時間
         submenu = wx.Menu()
         self.RegisterMenuCommand(submenu, [
-            "INSERT_TIME_WAIT",
+            "INSERT_WAIT",
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("時間"), submenu)
 
@@ -203,11 +210,13 @@ class Events(BaseEvents):
             self.openNode()
 
         # ノード関係
-        if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
+        if selected == menuItemsStore.getRef("INSERT_MESSAGE"):
             self.addNode(node.new("MessageNode"))
-        if selected == menuItemsStore.getRef("INSERT_IO_QUESTION"):
+        if selected == menuItemsStore.getRef("INSERT_QUESTION_BRANCH"):
             self.addNode(node.new("QuestionBranchNode"))
-        if selected == menuItemsStore.getRef("INSERT_TIME_WAIT"):
+        if selected == menuItemsStore.getRef("INSERT_FIFTY_FIFTY_BRANCH"):
+            self.addNode(node.new("FiftyFiftyBranchNode"))
+        if selected == menuItemsStore.getRef("INSERT_WAIT"):
             self.addNode(node.new("WaitNode"))
 
         # 移動関係
@@ -260,7 +269,7 @@ class Events(BaseEvents):
         for elem in node.child_block_constraints:
             node.setSingleChildBlock(
                 elem, block.Block(
-                    parent=self.parent.projectManager.browsing_block))
+                    parent_node=node))
         # end for
         b = list(node.child_block_display_names.values())
         # 1: display_name_1\n2: display_name2... のような文字を作る、表示用
@@ -322,10 +331,12 @@ class Events(BaseEvents):
         i = 10000  # ブロックパラメータの編集は ID 10000から
         for elem in list(node.parameter_display_names.values()):
             menu.Append(i, _("%(parameter)sを編集") % {"parameter": elem})
+            i += 1
         # end ブロックパラメータ編集の選択肢
         i = 20000  # サブブロックへの移動は ID 20000から
         for elem in list(node.child_block_display_names.values()):
             menu.Append(i, _("%(block)s サブブロックに入る") % {"block": elem})
+            i += 1
         # end サブブロックに入る選択肢
         selected = self.parent.codeBlockList.GetPopupMenuSelectionFromUser(
             menu)
@@ -337,6 +348,7 @@ class Events(BaseEvents):
             self.parent.projectManager.enterSubBlock(
                 index, list(node.child_blocks)[selected - 20000])
         # end サブブロックに入る
+        print(i)
         self.parent.updateList()
 
     def editSingleParameter(self, node, parameter_name):
@@ -396,7 +408,8 @@ class Events(BaseEvents):
 
     def run(self):
         try:
-            self.parent.projectManager.run()
+            runner = self.parent.projectManager.prepairRun()
+            runner.run()
         except Exception as e:
             dialog(_("実行時エラー"), _("プログラムの実行中にエラーが起きました。\n%s" % e))
 

@@ -15,6 +15,7 @@ class Manager:
         self.logger = logger
         self.nodeIO = nodeIO
         self.projectIO = projectIO
+        self.runnerClass = runner_class
         self.root_node = None
         self.browsing_block = None
         self.scope_level = 1
@@ -105,7 +106,7 @@ class Manager:
 
     def prepairRun(self):
         """プログラム実行を準備して、 runner オブジェクトを返す。"""
-        return self.runnerClass(self.outputProgramForDirectRun())
+        return self.runnerClass(self.outputProgramForDirectRun(), None)
 
     def getNodeAt(self, index):
         """現在閲覧中のブロックの、指定したインデックスのノードを取得。"""
