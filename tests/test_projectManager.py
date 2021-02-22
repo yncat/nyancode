@@ -22,7 +22,7 @@ def testProjectNode():
 def nestedProjectNode():
     r = node.new("RootNode")
     blk = block.Block()
-    n = node.new("QuestionNode", parent_block=blk)
+    n = node.new("QuestionBranchNode", parent_block=blk)
     n.setSingleParameter("title", "title")
     n.setSingleParameter("message", "message")
     blk.insert(n)

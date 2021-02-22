@@ -59,8 +59,8 @@ class TestCodegen(unittest.TestCase):
         generated = n.generate()
         self.assertEqual("nyancode.wait(1.5)", generated[0])
 
-    def test_question(self):
-        n = node.new("QuestionNode")
+    def test_questionBranch(self):
+        n = node.new("QuestionBranchNode")
         n.setSingleParameter("title", "title")
         n.setSingleParameter("message", "message")
         nsub = node.new("MessageNode")
@@ -74,6 +74,25 @@ class TestCodegen(unittest.TestCase):
         generated = n.generate()
         want = [
             "if nyancode.question(\"title\", \"message\"):",
+            "    nyancode.message(\"subtitle\", \"submessage\")",
+            "else:",
+            "    pass"
+        ]
+        self.assertEqual(want, generated)
+
+    def test_fiftyFiftyBranch(self):
+        n = node.new("FiftyFiftyBranchNode")
+        nsub = node.new("MessageNode")
+        nsub.setSingleParameter("title", "subtitle")
+        nsub.setSingleParameter("message", "submessage")
+        blk1 = Block()
+        blk1.insert(nsub)
+        blk2 = Block()
+        n.setSingleChildBlock("pattern1", blk1)
+        n.setSingleChildBlock("pattern2", blk2)
+        generated = n.generate()
+        want = [
+            "if nyancode.randomPattern(2) == 1:",
             "    nyancode.message(\"subtitle\", \"submessage\")",
             "else:",
             "    pass"

@@ -49,7 +49,9 @@ class RunningView(BaseView):
             style=wx.EXPAND | wx.ALL,
             proportion=1)
         self.runningStatic = creator.staticText(_("プログラムを実行中"))
-        self.abortButton = creator.cancelbutton(_("実行中止"), event=self.events.abort)
+        self.abortButton = creator.cancelbutton(
+            _("実行中止"), event=self.events.abort)
+
 
 class Events(BaseEvents):
     def abort(self, event=None):

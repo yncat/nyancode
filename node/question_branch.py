@@ -1,7 +1,7 @@
 from .base import *
 
 
-class QuestionNode(BaseNode):
+class QuestionBranchNode(BaseNode):
     """「はい/いいえ」で分岐。"""
     parameter_constraints = {
         "title": str,  # 質問タイトル

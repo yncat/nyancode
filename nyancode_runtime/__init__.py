@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 # Nyancode runtime module
 
+import random
 import time
 import wx
 
@@ -29,8 +30,12 @@ def question(title, message):
     dlg = wx.MessageDialog(options.parent_window, message, title, wx.YES_NO)
     return dlg.ShowModal() == wx.ID_YES
 
-# 一定時間待つ
-
 
 def wait(t):
+    """一定時間待つ"""
     time.sleep(t)
+
+
+def randomPattern(max):
+    """1から max までの整数を生成"""
+    return random.randint(1, max)

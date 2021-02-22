@@ -206,7 +206,7 @@ class Events(BaseEvents):
         if selected == menuItemsStore.getRef("INSERT_IO_PRINT"):
             self.addNode(node.new("MessageNode"))
         if selected == menuItemsStore.getRef("INSERT_IO_QUESTION"):
-            self.addNode(node.new("QuestionNode"))
+            self.addNode(node.new("QuestionBranchNode"))
         if selected == menuItemsStore.getRef("INSERT_TIME_WAIT"):
             self.addNode(node.new("WaitNode"))
 
