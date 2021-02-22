@@ -23,6 +23,7 @@ import nodeIO
 import project
 
 from .base import *
+from .running import RunningView
 from simpleDialog import *
 
 from views import strInputDialog, floatInputDialog
@@ -47,6 +48,8 @@ class MainView(BaseView):
         self.setupWidgets()
         self.setupNewProject()
         self.updateList()
+        self.running = RunningView()
+        self.running.Show()
 
     def setupWidgets(self):
         creator = views.ViewCreator.ViewCreator(

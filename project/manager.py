@@ -2,11 +2,11 @@ import os
 import block
 import constants
 import node
-import nyancode_runtime
+from .runner import *
 
 
 class Manager:
-    def __init__(self, logger=None, nodeIO=None, projectIO=None):
+    def __init__(self, logger=None, nodeIO=None, projectIO=None, runner_class=Runner):
         self.logger = logger
         self.nodeIO = nodeIO
         self.projectIO = projectIO
@@ -98,8 +98,10 @@ class Manager:
     def browseRootNodeContent(self):
         self.browsing_block = self.root_node.child_blocks["block"]
 
-    def run(self):
-        exec(self.outputProgramForDirectRun(), {"nyancode": nyancode_runtime})
+    def prepairRun(self):
+        """プログラム実行を準備して、 runner オブジェクトを返す。"""
+        return self.runnerClass(self.outputProgramForDirectRun())
+
 
     def getNodeAt(self, index):
         """現在閲覧中のブロックの、指定したインデックスのノードを取得。"""
