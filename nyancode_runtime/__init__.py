@@ -3,18 +3,21 @@
 
 import ctypes
 import time
+import wx
 
 # メッセージを表示
 
 
 def message(title, message):
-    ctypes.windll.user32.MessageBoxW(0, message, title, 0x00000040)
+    dlg = wx.MessageDialog(None, message, title, wx.OK)
+    dlg.ShowModal()
 
 # 質問ダイアログを表示
 
 
 def question(title, message):
-    return ctypes.windll.user32.MessageBoxW(0, message, title, 0x00000004) == 6
+    dlg = wx.MessageDialog(None, message, title, wx.YES_NO)
+    return dlg.ShowModal() == wx.ID_YES
 
 # 一定時間待つ
 
