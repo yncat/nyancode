@@ -419,6 +419,7 @@ class Events(BaseEvents):
             return
         self.parent.updateList()
         self.parent.codeBlockList.Focus(ret)
+        self.parent.codeBlockList.Select(ret)
 
     def Exit(self, event=None):
         if self.parent.projectManager.has_changes:
