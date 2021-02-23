@@ -429,6 +429,7 @@ class Events(BaseEvents):
         except Exception as e:
             dialog(_("エラー"), _("プロジェクトの読み込みに失敗しました。\n%s" % e))
         # end except
+        self.parent.updateTitleBarBasedOnProject()
         self.parent.updateList()
 
     def run(self):
