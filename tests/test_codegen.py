@@ -98,3 +98,19 @@ class TestCodegen(unittest.TestCase):
             "    pass"
         ]
         self.assertEqual(want, generated)
+
+    def test_loop(self):
+        n = node.new("LoopNode")
+        n.setSingleParameter("count", 5)
+        nsub = node.new("MessageNode")
+        nsub.setSingleParameter("title", "subtitle")
+        nsub.setSingleParameter("message", "submessage")
+        blk1 = Block()
+        blk1.insert(nsub)
+        n.setSingleChildBlock("block", blk1)
+        generated = n.generate()
+        want = [
+            "for i in range(5):",
+            "    nyancode.message(\"subtitle\", \"submessage\")"
+        ]
+        self.assertEqual(want, generated)

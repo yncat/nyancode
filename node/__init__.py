@@ -4,6 +4,8 @@ from .message import *
 from .question_branch import *
 from .fifty_fifty_branch import *
 
+from .loop import *
+
 from .wait import *
 
 

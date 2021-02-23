@@ -25,7 +25,7 @@ import project
 from .base import *
 from simpleDialog import *
 
-from views import strInputDialog, floatInputDialog
+from views import strInputDialog, floatInputDialog, intInputDialog
 from views import versionDialog
 
 
@@ -137,6 +137,7 @@ class Menu(BaseMenu):
             "INSERT_QUESTION_BRANCH",
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("入出力"), submenu)
+
         # 条件分岐
         submenu = wx.Menu()
         self.RegisterMenuCommand(submenu, [
@@ -146,6 +147,13 @@ class Menu(BaseMenu):
             "INSERT_FIFTY_FIFTY_BRANCH",
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("条件分岐"), submenu)
+
+        # 繰り返し
+        submenu = wx.Menu()
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_LOOP",
+        ])
+        self.RegisterMenuCommand(self.hInsertMenu, "", _("繰り返し"), submenu)
 
         # 時間
         submenu = wx.Menu()
@@ -216,6 +224,8 @@ class Events(BaseEvents):
             self.addNode(node.new("QuestionBranchNode"))
         if selected == menuItemsStore.getRef("INSERT_FIFTY_FIFTY_BRANCH"):
             self.addNode(node.new("FiftyFiftyBranchNode"))
+        if selected == menuItemsStore.getRef("INSERT_LOOP"):
+            self.addNode(node.new("LoopNode"))
         if selected == menuItemsStore.getRef("INSERT_WAIT"):
             self.addNode(node.new("WaitNode"))
 
@@ -299,7 +309,12 @@ class Events(BaseEvents):
             d.Initialize(
                 node.parameter_display_names[parameter_name],
                 default_value)
-        # end str
+        elif node.parameter_constraints[parameter_name] == int:
+            d = intInputDialog.dialog()
+            d.Initialize(
+                node.parameter_display_names[parameter_name],
+                default_value)
+        # end ダイアログの出し分け
         r = d.Show()
         if r == wx.ID_CANCEL:
             return None, True

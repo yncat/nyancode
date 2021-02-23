@@ -8,6 +8,7 @@ dic = {
     "INSERT_MESSAGE": _("メッセージを表示"),
     "INSERT_QUESTION_BRANCH": _("「はい/いいえ」で分岐"),
     "INSERT_FIFTY_FIFTY_BRANCH": _("ランダムで2つに分岐"),
+    "INSERT_LOOP": _("一定回数繰り返し"),
     "INSERT_WAIT": _("一定時間待つ"),
     "MOVE_LEAVE": _("一つ上の階層へ"),
     "EXEC_RUN": _("実行"),
