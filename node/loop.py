@@ -4,7 +4,7 @@ from .base import *
 class LoopNode(BaseNode):
     """指定回数繰り返し"""
     parameter_constraints = {
-        "count": int  # 繰返し回数
+        "count": ParameterTypes.INT  # 繰返し回数
     }
     parameter_display_names = {
         "count": "繰返し回数"

@@ -263,10 +263,10 @@ class Events(BaseEvents):
             d.Initialize()
             r = d.Show()
 
-    def addNode(self, node):
+    def addNode(self, nd):
         input_index = 0
-        parameter_count = len(node.parameter_constraints)
-        parameter_names = list(node.parameter_constraints.keys())
+        parameter_count = len(nd.parameter_constraints)
+        parameter_names = list(nd.parameter_constraints.keys())
         canceled = False
 
         while input_index != parameter_count:
@@ -277,12 +277,12 @@ class Events(BaseEvents):
 
             parameter_name = parameter_names[input_index]
             value, inner_canceled = self.getNodeParameterBasedOnType(
-                node, parameter_name)
+                nd, parameter_name)
             if inner_canceled:
                 input_index -= 1
                 continue
             # end cancel
-            node.setSingleParameter(parameter_name, value)
+            nd.setSingleParameter(parameter_name, value)
             input_index += 1
         # end while
 
@@ -293,12 +293,12 @@ class Events(BaseEvents):
         # end cancel
 
         # 必要なブロックを追加
-        for elem in node.child_block_constraints:
+        for elem in nd.child_block_constraints:
             node.setSingleChildBlock(
                 elem, block.Block(
                     parent_node=node))
         # end for
-        b = list(node.child_block_display_names.values())
+        b = list(nd.child_block_display_names.values())
         # 1: display_name_1\n2: display_name2... のような文字を作る、表示用
         bs = "\n".join(["%d: %s" % (i + 1, b[i]) for i in range(len(b))])
         if len(b) > 0:
@@ -311,27 +311,21 @@ class Events(BaseEvents):
         self.parent.codeBlockList.Focus(index)
         self.parent.codeBlockList.Select(index)
 
-    def getNodeParameterBasedOnType(self, node, parameter_name):
+    def getNodeParameterBasedOnType(self, nd, parameter_name):
         # すでに値が入っている場合は、それを初期値として読み込む
-        default_value = node.parameterOrBlankString(parameter_name)
+        default_value = nd.parameterOrBlankString(parameter_name)
 
         # パラメータの型に応じた入力ダイアログを出す
-        if node.parameter_constraints[parameter_name] == str:
-            d = strInputDialog.dialog()
-            d.Initialize(
-                node.parameter_display_names[parameter_name],
-                default_value)
-        elif node.parameter_constraints[parameter_name] == float:
-            d = floatInputDialog.dialog()
-            d.Initialize(
-                node.parameter_display_names[parameter_name],
-                default_value)
-        elif node.parameter_constraints[parameter_name] == int:
-            d = intInputDialog.dialog()
-            d.Initialize(
-                node.parameter_display_names[parameter_name],
-                default_value)
-        # end ダイアログの出し分け
+        dialog_map = {
+            node.ParameterTypes.STR_SINGLELINE: strInputDialog.dialog,
+            node.ParameterTypes.STR_MULTILINE: strInputDialog.dialog,
+            node.ParameterTypes.INT: intInputDialog.dialog,
+            node.ParameterTypes.FLOAT: floatInputDialog.dialog
+        }
+        d = dialog_map[nd.parameter_constraints[parameter_name]]()
+        d.Initialize(
+            nd.parameter_display_names[parameter_name],
+            default_value)
         r = d.Show()
         if r == wx.ID_CANCEL:
             return None, True
@@ -358,37 +352,36 @@ class Events(BaseEvents):
         index = self.parent.codeBlockList.GetFocusedItem()
         if index == -1:
             return
-        node = self.parent.projectManager.getNodeAt(index)
+        nd = self.parent.projectManager.getNodeAt(index)
         menu = wx.Menu()
         i = 10000  # ブロックパラメータの編集は ID 10000から
-        for elem in list(node.parameter_display_names.values()):
+        for elem in list(nd.parameter_display_names.values()):
             menu.Append(i, _("%(parameter)sを編集") % {"parameter": elem})
             i += 1
         # end ブロックパラメータ編集の選択肢
         i = 20000  # サブブロックへの移動は ID 20000から
-        for elem in list(node.child_block_display_names.values()):
+        for elem in list(nd.child_block_display_names.values()):
             menu.Append(i, _("%(block)s サブブロックに入る") % {"block": elem})
             i += 1
         # end サブブロックに入る選択肢
         selected = self.parent.codeBlockList.GetPopupMenuSelectionFromUser(
             menu)
         if selected >= 10000 and selected < 20000:
-            self.editSingleParameter(node, list(
-                node.parameters)[selected - 10000])
+            self.editSingleParameter(nd, list(
+                nd.parameters)[selected - 10000])
         # end edit single parameter
         if selected >= 20000:
             self.parent.projectManager.enterSubBlock(
-                index, list(node.child_blocks)[selected - 20000])
+                index, list(nd.child_blocks)[selected - 20000])
         # end サブブロックに入る
-        print(i)
         self.parent.updateList()
 
-    def editSingleParameter(self, node, parameter_name):
+    def editSingleParameter(self, nd, parameter_name):
         value, canceled = self.getNodeParameterBasedOnType(
-            node, parameter_name)
+            nd, parameter_name)
         if canceled:
             return
-        node.setSingleParameter(parameter_name, value)
+        nd.setSingleParameter(parameter_name, value)
 
     def outputProgram(self):
         with wx.FileDialog(self.parent.hFrame, _("Python コードを保存"), wildcard=_("Python スクリプト") + "(*.py)|*.py", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:

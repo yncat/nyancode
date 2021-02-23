@@ -1,4 +1,12 @@
+from .parameter_types import *
 INDENT_WIDTH = 4
+
+ParameterTypes = enum.Enum("ParameterTypes", [
+    "STR_SINGLELINE",
+    "STR_MULTILINE",
+    "INT",
+    "FLOAT"
+])
 
 
 class BaseNode:

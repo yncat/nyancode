@@ -4,8 +4,8 @@ from .base import *
 class QuestionBranchNode(BaseNode):
     """「はい/いいえ」で分岐。"""
     parameter_constraints = {
-        "title": str,  # 質問タイトル
-        "message": str,  # 質問内容
+        "title": ParameterTypes.STR_SINGLELINE,  # 質問タイトル
+        "message": ParameterTypes.STR_MULTILINE,  # 質問内容
     }
     parameter_display_names = {
         "title": "質問タイトル",

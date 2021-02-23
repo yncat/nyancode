@@ -4,7 +4,7 @@ from .base import *
 class WaitNode(BaseNode):
     """一定時間待つ。"""
     parameter_constraints = {
-        "time": float,  # 待つ時間
+        "time": ParameterTypes.FLOAT,  # 待つ時間
     }
     parameter_display_names = {
         "time": "秒数",

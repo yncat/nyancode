@@ -4,8 +4,8 @@ from .base import *
 class MessageNode(BaseNode):
     """文字をプリントする。"""
     parameter_constraints = {
-        "title": str,  # メッセージタイトル
-        "message": str  # プリントする文字
+        "title": ParameterTypes.STR_SINGLELINE,  # メッセージタイトル
+        "message": ParameterTypes.STR_MULTILINE  # プリントする文字
     }
     parameter_display_names = {
         "title": "メッセージタイトル",
