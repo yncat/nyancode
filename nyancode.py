@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Application startup file
 
+import keymap
 import os
 import sys
 # Python3.8対応

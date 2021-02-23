@@ -14,7 +14,6 @@ import PyInstaller
 import diff_archiver
 import hashlib
 import json
-import sys
 sys.path.append(os.getcwd())
 
 
@@ -85,7 +84,7 @@ for hook in constants.NEED_HOOKS:
     shutil.copy(hook, hooks_path)
 if constants.APP_ICON is None:
     runcmd(
-        "%s --windowed --log-level=ERROR --version-file=version.txt %s" %
+        "%s --log-level=ERROR --version-file=version.txt %s" %
         (pyinstaller_path, constants.STARTUP_FILE))
 else:
     runcmd(

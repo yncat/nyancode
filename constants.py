@@ -8,9 +8,9 @@ import wx
 APP_FULL_NAME = "nyancode"  # アプリケーションの完全な名前
 APP_NAME = "nyancode"  # アプリケーションの名前
 APP_ICON = None
-APP_VERSION = "0.0.01"
-APP_LAST_RELEASE_DATE = "20xx-xx-xx"
-APP_COPYRIGHT_YEAR = "20xx"
+APP_VERSION = "0.0.1"
+APP_LAST_RELEASE_DATE = "2021-02-25"
+APP_COPYRIGHT_YEAR = "2021"
 APP_LICENSE = "Apache License 2.0"
 APP_DEVELOPERS = "Yukio Nozawa"
 APP_DEVELOPERS_URL = "https://nyanchangames.com/"
@@ -39,7 +39,7 @@ FULL_CHECKED = wx.CHK_CHECKED
 BASE_PACKAGE_URL = None
 PACKAGE_CONTAIN_ITEMS = ()  # パッケージに含めたいファイルやfolderがあれば指定
 NEED_HOOKS = ()  # pyinstallerのhookを追加したい場合は指定
-STARTUP_FILE = "application.py"  # 起動用ファイルを指定
+STARTUP_FILE = "nyancode.py"  # 起動用ファイルを指定
 # update情報
 UPDATE_URL = "https://actlab.org/api/checkUpdate"
 UPDATER_VERSION = "1.0.0"
