@@ -6,18 +6,28 @@ GUIでプログラミング的なことができる教材を目指してます�
 # requirements
 - Windows
 - Python 3.8
+- makeが動く環境
 
 # setup
-コマンドプロンプトなどで、
-
-pip install -r requirements.txt
+make setup
+依存ライブラリをインストールして、コミット時にテストが走るように pre-commit フックが設定されます。
 
 # run
-python application.py
+make
 
-Windows用のMSIインストーラでPythonを入れた場合は、 py application.py かも。
+# コードの自動成形
+make fmt
+インデントとかが勝手にきれいになります。
 
 # test
-python -m unittest discover tests
+make test
 
 GUI部分を除いたロジックのテストです。
+
+# exeファイルと配布用zipをビルド
+make build
+
+# キーマップをリセット
+make reset-keymap
+
+メニューに新しい項目を追加したときに実行する必要があります。

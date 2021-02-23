@@ -1,6 +1,10 @@
 run:
 	py nyancode.py
 
+setup:
+	py -m pip install -r requirements.txt
+	cp github_hooks/pre-commit ./.git/hooks
+
 fmt:
 	py -m autopep8 -r -i -a -a .
 test:
