@@ -5,7 +5,6 @@
 
 import sys
 import wx
-import pywintypes
 
 import block
 import constants

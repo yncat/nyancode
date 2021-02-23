@@ -3,7 +3,6 @@
 # Copyright (C) 2021 Yukio Nozawa <personal@nyanchangames.com>
 
 import wx
-import pywintypes
 
 import block
 import constants
