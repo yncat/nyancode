@@ -3,12 +3,8 @@
 # Copyright (C) 2019 Yukio Nozawa <personal@nyanchangames.com>
 # Copyright (C) 2019-2020 yamahubuki <itiro.ishino@gmail.com>
 
-import logging
-import os
 import sys
 import wx
-import re
-import ctypes
 import pywintypes
 
 import block

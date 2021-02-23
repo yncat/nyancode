@@ -1,7 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 # Copyright (C) 2019 yamahubuki <itiro.ishino@gmail.com>
 
-import logging
 import wx
 from logging import getLogger
 #from .base import *

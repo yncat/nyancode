@@ -4,7 +4,6 @@
 import wx
 import globalVars
 import views.ViewCreator
-from logging import getLogger
 from views.baseDialog import *
 import constants
 

@@ -9,7 +9,6 @@ import globalVars
 import simpleDialog
 import views.ViewCreator
 
-from logging import getLogger
 from views.baseDialog import *
 
 

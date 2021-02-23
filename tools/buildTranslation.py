@@ -5,7 +5,6 @@ import sys
 import os
 import subprocess
 import glob
-import shutil
 
 if not os.path.exists("locale"):
     print("Error: no locale folder found. Your working directory must be the root of the project. You shouldn't cd to tools and run this script.")

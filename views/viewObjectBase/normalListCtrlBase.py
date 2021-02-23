@@ -3,7 +3,6 @@
 # Copyright (C) 2020 yamahubuki <itiro.ishino@gmail.com>
 
 import globalVars
-import json
 import wx
 from views.viewObjectBase import viewObjectUtil, listCtrlBase
 

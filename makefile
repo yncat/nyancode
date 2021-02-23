@@ -10,6 +10,8 @@ setup:
 
 fmt:
 	py -m autopep8 -r -i -a -a .
+	py -m autoflake -r -i .
+
 test:
 	py -m unittest discover tests
 .PHONY: clear-keymap

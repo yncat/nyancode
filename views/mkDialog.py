@@ -2,7 +2,6 @@
 # sample dialog
 
 import wx
-import os
 
 import views.ViewCreator
 from views.baseDialog import *

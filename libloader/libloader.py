@@ -1,8 +1,6 @@
 import ctypes
-import collections
 import platform
 import os
-import sys
 
 TYPES = {
     'Linux': {

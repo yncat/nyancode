@@ -9,7 +9,6 @@ import os
 import sys
 import subprocess
 import shutil
-import distutils.dir_util
 import PyInstaller
 import diff_archiver
 import hashlib

@@ -2,12 +2,7 @@
 # プログラム実行中画面
 # Copyright (C) 2021 Yukio Nozawa <personal@nyanchangames.com>
 
-import logging
-import os
-import sys
 import wx
-import re
-import ctypes
 import pywintypes
 
 import block

@@ -12,7 +12,6 @@ import os
 import subprocess
 import sys
 from views import updateDialog
-import time
 import threading
 import win32api
 from logging import getLogger

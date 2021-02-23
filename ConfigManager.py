@@ -4,7 +4,6 @@
 
 import os
 import configparser
-import logging
 from logging import getLogger
 
 
