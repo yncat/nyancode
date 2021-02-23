@@ -1,6 +1,9 @@
 run:
 	py nyancode.py
 
+run-sample1:
+	py nyancode.py samples/sample1.ncp
+
 setup:
 	py -m pip install -r requirements.txt
 	cp github_hooks/pre-commit ./.git/hooks

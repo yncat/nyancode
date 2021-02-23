@@ -45,7 +45,8 @@ class MainView(BaseView):
         )
         self.InstallMenuEvent(Menu(self.identifier), self.events.OnMenuSelect)
         self.setupWidgets()
-        self.setupNewProject()
+        self.setupNewOrExistingProject()
+        self.updateTitleBarBasedOnProject()
         self.updateList()
 
     def setupWidgets(self):
@@ -65,13 +66,33 @@ class MainView(BaseView):
         self.codeBlockList.Bind(
             wx.EVT_LIST_ITEM_ACTIVATED, self.events.openNode)
 
-    def setupNewProject(self):
+    def setupNewOrExistingProject(self):
         l = getLogger("%s.%s" % (constants.LOG_PREFIX, "ProjectManager"))
         nio = nodeIO.NodeIO()
         pio = project.IO()
         self.projectManager = project.Manager(
             logger=l, nodeIO=nio, projectIO=pio)
+        # コマンドライン引数にファイル名が入っていれば、それをプロジェクトとして読もうと試みる。成功したらそのプロジェクトを使い、失敗したら新規プロジェクトにフォールバックする。
+        if len(sys.argv) == 1:
+            self._setupNewProject()
+            return
+        # end 引数がないのでさっさと帰る
+        load_ok = True
+        try:
+            self.projectManager.load(sys.argv[1])
+        except BaseException:
+            load_ok = False
+        # end 読み込み失敗
+        if not load_ok:
+            self._setupNewProject()
+
+    def _setupNewProject(self):
         self.projectManager.new(_("新規プロジェクト"))
+
+    def updateTitleBarBasedOnProject(self):
+        pn = _("新規プロジェクト") if self.projectManager.getProjectName(
+        ) == "" else self.projectManager.getProjectName()
+        self.hFrame.SetTitle(pn + " - " + constants.APP_NAME)
 
     def updateList(self):
         self.codeBlockList.DeleteAllItems()

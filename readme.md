@@ -15,6 +15,11 @@ make setup
 # run
 make
 
+# run with a sample loaded
+make run-sample1
+
+サンプル1を読み込んだ状態で起動します。
+
 # コードの自動成形
 make fmt
 インデントとかが勝手にきれいになります。
