@@ -293,9 +293,9 @@ class Events(BaseEvents):
 
         # 必要なブロックを追加
         for elem in nd.child_block_constraints:
-            node.setSingleChildBlock(
+            nd.setSingleChildBlock(
                 elem, block.Block(
-                    parent_node=node))
+                    parent_node=nd))
         # end for
         b = list(nd.child_block_display_names.values())
         # 1: display_name_1\n2: display_name2... のような文字を作る、表示用
@@ -305,7 +305,7 @@ class Events(BaseEvents):
                    {"num": len(b)} + "\n" + bs)
         # end ブロック追加したのでメッセージ表示
         index = self.parent.codeBlockList.GetFocusedItem() + 1
-        self.parent.projectManager.insertNodeToCurrentBlock(node, index=index)
+        self.parent.projectManager.insertNodeToCurrentBlock(nd, index=index)
         self.parent.updateList()
         self.parent.codeBlockList.Focus(index)
         self.parent.codeBlockList.Select(index)
