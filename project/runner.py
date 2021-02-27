@@ -1,4 +1,4 @@
-import nyancode_runtime
+import nyancode_runtime_std
 
 
 class Runner:

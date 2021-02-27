@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 # Application startup file
 
+import traceback
+import nyancode_runtime_std  # dummy
+import simpleDialog
+import app as application
+import globalVars
 import keymap
 import os
 import sys
@@ -10,11 +15,9 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 8:
     os.add_dll_directory(os.path.dirname(os.path.abspath(__file__)))
     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-import globalVars
-import app as application
-import simpleDialog
-import nyancode_runtime  # dummy
-import traceback
+# 開発用に、 nyancode_runtime_std を1個上のディレクトリのリポジトリから読めるようにする
+sys.path.append("../nyancode-runtime-std")
+
 
 # カレントディレクトリを設定
 if hasattr(sys, "frozen"):
