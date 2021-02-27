@@ -1,10 +1,10 @@
 ﻿# -*- coding: utf-8 -*-
-# float input dialog
+# audio file path input dialog
 
+import os
 import wx
 import globalVars
 import views.ViewCreator
-import simpleDialog
 from views.baseDialog import *
 import constants
 
@@ -15,7 +15,7 @@ class dialog(BaseDialog):
 
     def Initialize(self, parameter_display_name, default_value):
         self.log.debug("created")
-        super().Initialize(None, _("数値引数の入力"))
+        super().Initialize(None, _("サウンドファイルパスの入力"))
         self.parameter_display_name = parameter_display_name
         self.default_value = default_value
         self.InstallControls()
@@ -28,7 +28,7 @@ class dialog(BaseDialog):
         self.input, static = creator.inputbox(
             self.parameter_display_name,
             defaultValue=self.default_value,
-            x=100
+            x=400
         )
         footerCreator = views.ViewCreator.ViewCreator(
             self.viewMode,
@@ -39,21 +39,20 @@ class dialog(BaseDialog):
         self.okBtn = footerCreator.okbutton(_("OK"), event=self.checkInput)
         self.okBtn.SetDefault()
         self.closeBtn = footerCreator.cancelbutton(_("キャンセル"))
+        self.closeBtn.SetDefault()
 
     def Destroy(self, events=None):
         self.log.debug("destroy")
         self.wnd.Destroy()
 
     def getData(self):
-        return float(self.input.GetValue())
+        return self.input.GetValue()
 
     def checkInput(self, event):
-        try:
-            v = self.input.GetValue()
-        except BaseException:
+        val = self.input.GetValue()
+        if not os.path.isfile(val):
             simpleDialog.dialog(
-                _("%(value)s は、数値として扱えない形式です。入力し直してください。") % {
-                    "value": self.input.GetValue()})
+                _("エラー"),
+                _("%(path)s というファイルが存在しません。") % {
+                    "path": val})
             event.Veto()
-        # end error
-        event.Skip()

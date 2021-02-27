@@ -20,7 +20,7 @@ import project
 from .base import *
 from simpleDialog import *
 
-from views import strInputDialog, floatInputDialog, intInputDialog
+from views import strInputDialog, floatInputDialog, intInputDialog, audioFilePathInputDialog
 from views import versionDialog
 
 
@@ -171,6 +171,13 @@ class Menu(BaseMenu):
         ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("繰り返し"), submenu)
 
+        # サウンド
+        submenu = wx.Menu()
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_PLAYONESHOT",
+        ])
+        self.RegisterMenuCommand(self.hInsertMenu, "", _("サウンド"), submenu)
+
         # 時間
         submenu = wx.Menu()
         self.RegisterMenuCommand(submenu, [
@@ -242,6 +249,8 @@ class Events(BaseEvents):
             self.addNode(node.new("FiftyFiftyBranchNode"))
         if selected == menuItemsStore.getRef("INSERT_LOOP"):
             self.addNode(node.new("LoopNode"))
+        if selected == menuItemsStore.getRef("INSERT_PLAYONESHOT"):
+            self.addNode(node.new("PlayOneShotNode"))
         if selected == menuItemsStore.getRef("INSERT_WAIT"):
             self.addNode(node.new("WaitNode"))
 
@@ -319,7 +328,8 @@ class Events(BaseEvents):
             node.ParameterTypes.STR_SINGLELINE: strInputDialog.dialog,
             node.ParameterTypes.STR_MULTILINE: strInputDialog.dialog,
             node.ParameterTypes.INT: intInputDialog.dialog,
-            node.ParameterTypes.FLOAT: floatInputDialog.dialog
+            node.ParameterTypes.FLOAT: floatInputDialog.dialog,
+            node.ParameterTypes.PATH_AUDIOFILE: audioFilePathInputDialog.dialog
         }
         d = dialog_map[nd.parameter_constraints[parameter_name]]()
         d.Initialize(
