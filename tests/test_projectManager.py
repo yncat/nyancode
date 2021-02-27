@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import init
+import unittest
+from unittest.mock import Mock
+import block
+import project
+import node
+import nodeIO
 import sys
 sys.path.append("../nyancode-runtime-std")
 
-import nodeIO
-import node
-import project
-import block
-from unittest.mock import Mock
-import unittest
-import sys
 sys.path.append("../nyancode-runtime-std")
 
 
