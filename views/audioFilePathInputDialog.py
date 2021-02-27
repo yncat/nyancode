@@ -10,6 +10,12 @@ import constants
 
 
 class dialog(BaseDialog):
+    extensions = [
+        "wav",
+        "mp3",
+        "ogg"
+    ]
+
     def __init__(self):
         super().__init__("StringInputDialog")
 
@@ -30,6 +36,8 @@ class dialog(BaseDialog):
             defaultValue=self.default_value,
             x=400
         )
+        self.browseButton = creator.button(
+            _("参照"), event=self.browse, size=(100, 100))
         footerCreator = views.ViewCreator.ViewCreator(
             self.viewMode,
             self.panel,
@@ -56,3 +64,12 @@ class dialog(BaseDialog):
                 _("%(path)s というファイルが存在しません。") % {
                     "path": val})
             event.Veto()
+
+    def browse(self, event):
+        ext = ";".join(["*." + elem for elem in self.extensions])
+        with wx.FileDialog(self.wnd, _("サウンドファイルを選択"), wildcard=_("サウンドファイル") + "(" + ext + ")|" + ext, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                return
+            path = fileDialog.GetPath()
+        # end dialog
+        self.input.ChangeValue(path)
