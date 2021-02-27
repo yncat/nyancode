@@ -39,7 +39,6 @@ class dialog(BaseDialog):
         self.okBtn = footerCreator.okbutton(_("OK"), event=self.checkInput)
         self.okBtn.SetDefault()
         self.closeBtn = footerCreator.cancelbutton(_("キャンセル"))
-        self.closeBtn.SetDefault()
 
     def Destroy(self, events=None):
         self.log.debug("destroy")
@@ -50,11 +49,12 @@ class dialog(BaseDialog):
 
     def checkInput(self, event):
         try:
-            v = self.input.GetValue()
+            v = int(self.input.GetValue())
         except BaseException:
             simpleDialog.dialog(
+                _("エラー"),
                 _("%(value)s は、整数値として扱えない形式です。入力し直してください。") % {
                     "value": self.input.GetValue()})
-            event.Veto()
+            return
         # end error
         event.Skip()

@@ -49,11 +49,12 @@ class dialog(BaseDialog):
 
     def checkInput(self, event):
         try:
-            v = self.input.GetValue()
+            v = float(self.input.GetValue())
         except BaseException:
             simpleDialog.dialog(
+                _("エラー"),
                 _("%(value)s は、数値として扱えない形式です。入力し直してください。") % {
                     "value": self.input.GetValue()})
-            event.Veto()
+            return
         # end error
         event.Skip()
