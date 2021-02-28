@@ -11,6 +11,7 @@ dic = {
     "INSERT_LOOP": _("一定回数繰り返し"),
     "INSERT_WAIT": _("一定時間待つ"),
     "INSERT_PLAYONESHOT": _("効果音を再生"),
+    "INSERT_PLAYONESHOTANDWAIT": _("効果音を再生し終了まで待機"),
     "MOVE_LEAVE": _("一つ上の階層へ"),
     "EXEC_RUN": _("実行"),
     "EXEC_OUTPUTPROGRAM": _("Python コードを出力"),

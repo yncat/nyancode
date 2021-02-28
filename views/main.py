@@ -176,6 +176,9 @@ class Menu(BaseMenu):
         self.RegisterMenuCommand(submenu, [
             "INSERT_PLAYONESHOT",
         ])
+        self.RegisterMenuCommand(submenu, [
+            "INSERT_PLAYONESHOTANDWAIT",
+        ])
         self.RegisterMenuCommand(self.hInsertMenu, "", _("サウンド"), submenu)
 
         # 時間
@@ -251,6 +254,8 @@ class Events(BaseEvents):
             self.addNode(node.new("LoopNode"))
         if selected == menuItemsStore.getRef("INSERT_PLAYONESHOT"):
             self.addNode(node.new("PlayOneShotNode"))
+        if selected == menuItemsStore.getRef("INSERT_PLAYONESHOTANDWAIT"):
+            self.addNode(node.new("PlayOneShotAndWaitNode"))
         if selected == menuItemsStore.getRef("INSERT_WAIT"):
             self.addNode(node.new("WaitNode"))
 
