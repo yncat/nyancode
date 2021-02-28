@@ -1,7 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 # constant values
-# Copyright (C) 20XX anonimous <anonimous@sample.com>
+# Copyright (C) 2021 Yukio Nozawa<personal@nyanchangames.com>
 
+import os
 import wx
 
 # アプリケーション基本情報
@@ -35,6 +36,7 @@ FONT_MAX_SIZE = 35
 NOT_CHECKED = wx.CHK_UNCHECKED
 HALF_CHECKED = wx.CHK_UNDETERMINED
 FULL_CHECKED = wx.CHK_CHECKED
+
 # build関連定数
 BASE_PACKAGE_URL = None
 PACKAGE_CONTAIN_ITEMS = ()  # パッケージに含めたいファイルやfolderがあれば指定
@@ -44,3 +46,6 @@ STARTUP_FILE = "nyancode.py"  # 起動用ファイルを指定
 UPDATE_URL = "https://actlab.org/api/checkUpdate"
 UPDATER_VERSION = "1.0.0"
 UPDATER_WAKE_WORD = "hello"
+
+# 固有の設定情報
+DATA_DIRECTORY = os.path.join(os.getcwd(), "data")

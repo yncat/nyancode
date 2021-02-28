@@ -3,10 +3,11 @@
 
 import os
 import wx
+import constants
 import globalVars
+import simpleDialog
 import views.ViewCreator
 from views.baseDialog import *
-import constants
 
 
 class dialog(BaseDialog):
@@ -47,7 +48,6 @@ class dialog(BaseDialog):
         self.okBtn = footerCreator.okbutton(_("OK"), event=self.checkInput)
         self.okBtn.SetDefault()
         self.closeBtn = footerCreator.cancelbutton(_("キャンセル"))
-        self.closeBtn.SetDefault()
 
     def Destroy(self, events=None):
         self.log.debug("destroy")
@@ -58,18 +58,41 @@ class dialog(BaseDialog):
 
     def checkInput(self, event):
         val = self.input.GetValue()
-        if not os.path.isfile(val):
+        full_path = os.path.join(constants.DATA_DIRECTORY, val)
+        if not os.path.isfile(full_path):
             simpleDialog.dialog(
                 _("エラー"),
                 _("%(path)s というファイルが存在しません。") % {
-                    "path": val})
-            event.Veto()
+                    "path": full_path})
+            return
+            # end error
+        if not self._checkDataPath(val):
+            return
+        event.Skip()
 
     def browse(self, event):
         ext = ";".join(["*." + elem for elem in self.extensions])
-        with wx.FileDialog(self.wnd, _("サウンドファイルを選択"), wildcard=_("サウンドファイル") + "(" + ext + ")|" + ext, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
+        dir = os.path.join(os.getcwd(), "data\\sound")
+        with wx.FileDialog(self.wnd, _("サウンドファイルを選択"), wildcard=_("サウンドファイル") + "(" + ext + ")|" + ext, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST, defaultDir=dir) as fileDialog:
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
             path = fileDialog.GetPath()
         # end dialog
-        self.input.ChangeValue(path)
+        if not self._checkDataPath(path):
+            return
+        self.input.ChangeValue(
+            os.path.relpath(
+                path, start=constants.DATA_DIRECTORY))
+
+    def _checkDataPath(self, path):
+        # ポータビリティを高めるために、 data ディレクトリの外にあるファイルは読み込めないようにする。
+        # ただし、data ディレクトリからの相対パスで観て、ちゃんとファイルがある場合はOKとする
+        # エラーがある場合は、ここでダイアログを出して、 False を返す。
+        # True を返した場合は、呼び出し元は処理を続行してよい。
+        exists = os.path.isfile(os.path.join(constants.DATA_DIRECTORY, path))
+        if not path.startswith(constants.DATA_DIRECTORY) and not exists:
+            simpleDialog.dialog(_("エラー"), _(
+                "このファイルを使いたい場合は、アプリケーションの data ディレクトリ、またはそのサブディレクトリにファイルをコピーしてから、コピーしたファイルを選択してください。"))
+            return False
+        # end だめ
+        return True
