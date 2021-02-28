@@ -1,0 +1,22 @@
+{
+  "name": "RootNode",
+  "parameters": {},
+  "child_blocks": {
+    "block": [
+      {
+        "name": "PlayOneShotNode",
+        "parameters": {
+          "path": "sound\\chime.ogg"
+        },
+        "child_blocks": {}
+      },
+      {
+        "name": "WaitNode",
+        "parameters": {
+          "time": 3.0
+        },
+        "child_blocks": {}
+      }
+    ]
+  }
+}
