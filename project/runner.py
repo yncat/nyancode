@@ -10,6 +10,7 @@ class Runner:
 
     def run(self):
         nyancode_runtime.configure(
+            parent_window=self.parent_window,
             data_directory=constants.DATA_DIRECTORY
         )
         exec(self.program, {"nyancode": nyancode_runtime})

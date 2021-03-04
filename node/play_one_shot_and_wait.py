@@ -14,6 +14,6 @@ class PlayOneShotAndWaitNode(BaseNode):
     def generate(self, indent_level=0, for_direct_run=False):
         lst = []
         self._generate(
-            lst, "nyancode.playOneShotAndWait(\"%s\")" %
+            lst, "nyancode.playOneShot(\"%s\", wait=True)" %
             (self.parameters["path"]), indent_level)
         return lst

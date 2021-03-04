@@ -130,5 +130,5 @@ class TestCodegen(unittest.TestCase):
         n.setSingleParameter("path", "D:\\audio.wav")
         generated = n.generate()
         self.assertEqual(
-            "nyancode.playOneShotAndWait(\"D:\\audio.wav\")",
+            "nyancode.playOneShot(\"D:\\audio.wav\", wait=True)",
             generated[0])
