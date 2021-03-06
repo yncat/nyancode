@@ -113,6 +113,9 @@ class Menu(BaseMenu):
     def Apply(self, target):
         """指定されたウィンドウに、メニューを適用する。"""
 
+        #メニュー内容をいったんクリア
+        self.hMenuBar = wx.MenuBar()
+
         # メニューの大項目を作る
         self.hFileMenu = wx.Menu()
         self.hEditMenu = wx.Menu()
