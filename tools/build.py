@@ -2,7 +2,10 @@
 # app build tool
 # Copyright (C) 2019 Yukio Nozawa <personal@nyanchangames.com>
 # Copyright (C) 2019 - 2020 guredora <contact@guredora.com>
-
+import sys
+import os
+import init
+print(os.getcwd())
 import constants
 import glob
 import os
