@@ -86,7 +86,7 @@ for hook in constants.NEED_HOOKS:
     shutil.copy(hook, hooks_path)
 if constants.APP_ICON is None:
     runcmd(
-        "%s --log-level=ERROR --version-file=version.txt %s" %
+        "%s --windowed --log-level=ERROR --version-file=version.txt %s" %
         (pyinstaller_path, constants.STARTUP_FILE))
 else:
     runcmd(
