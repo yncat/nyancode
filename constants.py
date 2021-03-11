@@ -15,7 +15,7 @@ APP_COPYRIGHT_YEAR = "2021"
 APP_LICENSE = "Apache License 2.0"
 APP_DEVELOPERS = "Yukio Nozawa"
 APP_DEVELOPERS_URL = "https://nyanchangames.com/"
-APP_DETAILS_URL = "https://example.com/template"
+APP_DETAILS_URL = "https://github.com/yncat/nyancode"
 APP_COPYRIGHT_MESSAGE = "Copyright (c) %s %s All lights reserved." % (
     APP_COPYRIGHT_YEAR, APP_DEVELOPERS)
 
