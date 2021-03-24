@@ -113,7 +113,7 @@ class Menu(BaseMenu):
     def Apply(self, target):
         """指定されたウィンドウに、メニューを適用する。"""
 
-        #メニュー内容をいったんクリア
+        # メニュー内容をいったんクリア
         self.hMenuBar = wx.MenuBar()
 
         # メニューの大項目を作る
@@ -248,19 +248,24 @@ class Events(BaseEvents):
 
         # ノード関係
         if selected == menuItemsStore.getRef("INSERT_MESSAGE"):
-            self.addNode(node.new("MessageNode"))
+            self.addNode(
+                self.parent.projectManager.generateNode("MessageNode"))
         if selected == menuItemsStore.getRef("INSERT_QUESTION_BRANCH"):
-            self.addNode(node.new("QuestionBranchNode"))
+            self.addNode(
+                self.parent.projectManager.generateNode("QuestionBranchNode"))
         if selected == menuItemsStore.getRef("INSERT_FIFTY_FIFTY_BRANCH"):
-            self.addNode(node.new("FiftyFiftyBranchNode"))
+            self.addNode(
+                self.parent.projectManager.generateNode("FiftyFiftyBranchNode"))
         if selected == menuItemsStore.getRef("INSERT_LOOP"):
-            self.addNode(node.new("LoopNode"))
+            self.addNode(self.parent.projectManager.generateNode("LoopNode"))
         if selected == menuItemsStore.getRef("INSERT_PLAYONESHOT"):
-            self.addNode(node.new("PlayOneShotNode"))
+            self.addNode(
+                self.parent.projectManager.generateNode("PlayOneShotNode"))
         if selected == menuItemsStore.getRef("INSERT_PLAYONESHOTANDWAIT"):
-            self.addNode(node.new("PlayOneShotAndWaitNode"))
+            self.addNode(self.parent.projectManager.generateNode(
+                "PlayOneShotAndWaitNode"))
         if selected == menuItemsStore.getRef("INSERT_WAIT"):
-            self.addNode(node.new("WaitNode"))
+            self.addNode(self.parent.projectManager.generateNode("WaitNode"))
 
         # 移動関係
         if selected == menuItemsStore.getRef("MOVE_LEAVE"):

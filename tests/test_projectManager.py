@@ -6,6 +6,7 @@ from unittest.mock import Mock
 import block
 import project
 import node
+from node.test import TestNode
 import nodeIO
 import sys
 sys.path.append("../nyancode-runtime-std")
@@ -242,3 +243,12 @@ class TestProjectManager(unittest.TestCase):
         ret = m.leaveSubBlock()
         self.assertEqual(1, m.scope_level)
         self.assertEqual(None, ret)
+
+    def test_generateNode(self):
+        n = testProjectNode()
+        m = project.Manager()
+        m.root_node = n
+        m.browsing_block = n.child_blocks["block"]
+        nd = m.generateNode("TestNode")
+        self.assertTrue(isinstance(nd, TestNode))
+        self.assertEqual(m.browsing_block, nd.parent_block)

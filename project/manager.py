@@ -137,6 +137,9 @@ class Manager:
         # end 探した
         return found
 
+    def generateNode(self, name):
+        return node.new(name, parent_block=self.browsing_block)
+
     def _logDebug(self, msg):
         if self.logger:
             self.logger.debug(msg)
