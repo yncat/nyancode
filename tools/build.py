@@ -2,20 +2,18 @@
 # app build tool
 # Copyright (C) 2019 Yukio Nozawa <personal@nyanchangames.com>
 # Copyright (C) 2019 - 2020 guredora <contact@guredora.com>
+import json
+import hashlib
+import diff_archiver
+import PyInstaller
+import shutil
+import subprocess
+import glob
+import constants
 import sys
 import os
 import init
 print(os.getcwd())
-import constants
-import glob
-import os
-import sys
-import subprocess
-import shutil
-import PyInstaller
-import diff_archiver
-import hashlib
-import json
 sys.path.append(os.getcwd())
 
 
