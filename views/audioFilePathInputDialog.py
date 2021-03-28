@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 # audio file path input dialog
 
+import glob
 import os
 import wx
 import constants
@@ -25,6 +26,7 @@ class dialog(BaseDialog):
         super().Initialize(None, _("サウンドファイルパスの入力"))
         self.parameter_display_name = parameter_display_name
         self.default_value = default_value
+        self.prepareFileList()
         self.InstallControls()
         return True
 
@@ -32,13 +34,8 @@ class dialog(BaseDialog):
         """いろんなwidgetを設置する。"""
         creator = views.ViewCreator.ViewCreator(
             self.viewMode, self.panel, self.sizer, wx.VERTICAL, 20)
-        self.input, static = creator.inputbox(
-            self.parameter_display_name,
-            defaultValue=self.default_value,
-            x=400
-        )
-        self.browseButton = creator.button(
-            _("参照"), event=self.browse, size=(100, 100))
+        self.filesList, static = creator.listbox(
+            _("サウンドファイル一覧"), choices=self.files, size=(300, 300))
         footerCreator = views.ViewCreator.ViewCreator(
             self.viewMode,
             self.panel,
@@ -49,15 +46,33 @@ class dialog(BaseDialog):
         self.okBtn.SetDefault()
         self.closeBtn = footerCreator.cancelbutton(_("キャンセル"))
 
+    def prepareFileList(self):
+        lst = []
+        for e in self.extensions:
+            lst.extend([os.path.basename(f)
+                        for f in glob.glob("data\\sound\\*." + e)])
+        # end make list
+        self.files = lst
+
     def Destroy(self, events=None):
         self.log.debug("destroy")
         self.wnd.Destroy()
 
     def getData(self):
-        return self.input.GetValue()
+        if self.filesList.GetSelection == -1:
+            return ""
+        # end no selection
+        return os.path.join("sound", self.files[self.filesList.GetSelection()])
 
     def checkInput(self, event):
-        val = self.input.GetValue()
+        val = self.getData()
+        if val == "":
+            simpleDialog.dialog(
+                _("エラー"),
+                _("一覧から、サウンドファイルを一つ選択してください。")
+            )
+            return
+        # end no selection
         full_path = os.path.join(constants.DATA_DIRECTORY, val)
         if not os.path.isfile(full_path):
             simpleDialog.dialog(
@@ -66,33 +81,4 @@ class dialog(BaseDialog):
                     "path": full_path})
             return
             # end error
-        if not self._checkDataPath(val):
-            return
         event.Skip()
-
-    def browse(self, event):
-        ext = ";".join(["*." + elem for elem in self.extensions])
-        dir = os.path.join(os.getcwd(), "data\\sound")
-        with wx.FileDialog(self.wnd, _("サウンドファイルを選択"), wildcard=_("サウンドファイル") + "(" + ext + ")|" + ext, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST, defaultDir=dir) as fileDialog:
-            if fileDialog.ShowModal() == wx.ID_CANCEL:
-                return
-            path = fileDialog.GetPath()
-        # end dialog
-        if not self._checkDataPath(path):
-            return
-        self.input.ChangeValue(
-            os.path.relpath(
-                path, start=constants.DATA_DIRECTORY))
-
-    def _checkDataPath(self, path):
-        # ポータビリティを高めるために、 data ディレクトリの外にあるファイルは読み込めないようにする。
-        # ただし、data ディレクトリからの相対パスで観て、ちゃんとファイルがある場合はOKとする
-        # エラーがある場合は、ここでダイアログを出して、 False を返す。
-        # True を返した場合は、呼び出し元は処理を続行してよい。
-        exists = os.path.isfile(os.path.join(constants.DATA_DIRECTORY, path))
-        if not path.startswith(constants.DATA_DIRECTORY) and not exists:
-            simpleDialog.dialog(_("エラー"), _(
-                "このファイルを使いたい場合は、アプリケーションの data ディレクトリ、またはそのサブディレクトリにファイルをコピーしてから、コピーしたファイルを選択してください。"))
-            return False
-        # end だめ
-        return True
